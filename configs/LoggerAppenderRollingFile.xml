@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+    @author VxR <vxr@vxr.it>
+    @version $Revision: 1.2 $
+    @since 0.3
+-->
+<log4php:configuration xmlns:log4php="http://www.vxr.it/log4php/" threshold="all" debug="false">
+    <appender name="default" class="LoggerAppenderRollingFile">
+        <!-- win32 example -->
+        <param name="file" value="logs/CrosswordSaverLARF.txt" />
+        <param name="maxFileSize" value="100KB" />
+        <param name="maxBackupIndex" value="3" />
+        <layout class="LoggerLayoutTTCC" />
+    </appender>
+    
+    <root>
+        <level value="debug" />
+        <appender_ref ref="default" />
+    </root>
+</log4php:configuration>

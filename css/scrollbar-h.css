@@ -1,0 +1,39 @@
+/* Styles for scrolling layers  
+	 Specify width and height in hold and wn, and in clip for wn. 
+   hold div height accommodates scrollbar in this example    
+*/
+div#hold	{ 
+	position:relative; overflow:hidden;
+	width:300px; height:140px; z-index:100
+	}
+div#wn	{ 
+	position:absolute; 
+	left:0px; top:0px; 
+	width:300px; height:150px; 
+	overflow:hidden;	
+	z-index:1; 
+	}
+div#lyr1	{ 
+	position:absolute; visibility:hidden; 
+	left:0px; top:0px; 
+	z-index:1; 
+	}
+
+/* Set small font-size or size/position of div's will be off in some browsers  */
+div#scrollbar { 
+  position:absolute; left:60; top:100px;
+  width:180px; height:11px;
+  font-size:1px; z-index:2
+  }
+div#track { 
+  position:absolute; left:12px; top:0;
+  width:160px; height:11px; z-index:1;
+  background: url("/img/track.gif") #336 repeat
+  }
+div#dragBar {
+  position:absolute; left:1px; top:1px;
+  width:20px; height:9px; z-index:1;
+  background-color:#ceced6
+  }  
+div#left { position:absolute; left:0; top:0; z-index:2 }  
+div#right { position:absolute; right:0; top:0; z-index:3 }

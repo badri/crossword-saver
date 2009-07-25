@@ -1,0 +1,116 @@
+#NavMenu {
+	margin-top: 104px;
+	margin-left: 638px;
+}
+
+/* IE cant set padding on a table so I've rev-engineered the menus and these are 
+   the containing divs for the sub-menus */
+#dm0m1, #dm0m2, #dm0m3, #dm0m4, #dm0m5 {
+	border-left:1px solid #BBB; border-right:1px solid #BBB; border-bottom:1px solid #BBB;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+    	background-image: url('../js/menuImages/ww_drop_bgfade.gif');
+	background-repeat: repeat-x;
+	background-position: left top;
+	background-color: #FFF;
+	border-top: medium none;
+	padding-left:0px;
+	padding-right:0px
+}
+
+.mi_top {
+	cursor: pointer;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 94px;
+	height: 26px;
+	background-image: url('../js/menuImages/btn_black.gif');
+	background-repeat: no-repeat;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 10px;
+}
+
+.mi_top_over {
+	cursor: pointer;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 94px;
+	height: 26px;
+	background-image: url('../js/menuImages/btn_black_blue.gif');
+	background-repeat: no-repeat;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 10px;
+}
+
+.icont {
+	width: 100%;
+}
+
+.icont td {
+	padding: 0px;
+	font-family: Verdana;
+	font-size: 10px;
+}
+
+.icont img {
+	margin-right: 5px;
+	padding-right: 5px;
+}
+
+.icont .l {
+	width: 3px;
+	height: 26px;
+}
+.icont .r {
+	width: 3px;
+	height: 26px;
+}
+.icont td.m {
+	padding-left: 3px;
+}
+.icont .m .miSpan {
+	vertical-align: 40%;
+}
+
+/* Style for items: normal state */
+.mi {
+	cursor: pointer;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 200px;
+}
+
+/* Style for items: mouseover state */
+.mi_over {
+	cursor: pointer;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 200px;
+}
+
+/* Style for items text: normal state */
+.mi_text {
+	font-family: Verdana;
+	font-size: 11px;
+	color: #232323;
+	width: 100%;
+}
+
+/* Style for items text: mouseover state */
+
+.mi_text_over .icont .l {
+	background-image: url('../js/menuImages/ww_drop_hover_left.gif');
+	background-repeat: no-repeat;
+}
+.mi_text_over .icont .m {
+	background-image: url('../js/menuImages/ww_drop_hover_bg.gif');
+	background-repeat: repeat-x;
+	color: #FFFFFF;
+}
+.mi_text_over .icont .r {
+	background-image: url('../js/menuImages/ww_drop_hover_right.gif');
+	background-repeat: no-repeat;
+}

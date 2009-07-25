@@ -1,0 +1,61 @@
+-- phpMyAdmin SQL Dump
+-- version 2.10.1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: May 02, 2007 at 10:05 PM
+-- Server version: 4.0.20
+-- PHP Version: 5.0.1
+
+--
+-- Database: `crosswordsaver`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cs_clues`
+--
+
+CREATE DATABASE `crosswordsaver`;
+
+USE `crosswordsaver`;
+
+CREATE TABLE `cs_clues` (
+  `id` int(11) NOT NULL auto_increment,
+  `crosswordId` int(11) default NULL,
+  `clue` varchar(100) default NULL,
+  `answer` varchar(30) default NULL,
+  `code` varchar(10) default NULL,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM COMMENT='Contains clues and answers for each crossword.' 
+AUTO_INCREMENT=1968 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cs_crossword`
+--
+
+CREATE TABLE `cs_crossword` (
+  `id` int(11) NOT NULL auto_increment,
+  `gridId` int(11) NOT NULL default '0',
+  `complete` char(1) default NULL,
+  `dateAdded` timestamp(14) NOT NULL,
+  `user` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM AUTO_INCREMENT=72 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cs_presets`
+--
+
+CREATE TABLE `cs_presets` (
+  `id` smallint(6) NOT NULL auto_increment,
+  `grid` longtext NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`grid`(128))
+) TYPE=MyISAM AUTO_INCREMENT=15 ;
+
