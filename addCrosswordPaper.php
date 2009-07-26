@@ -81,12 +81,12 @@ HD2;
     while( list( $key, $val ) = each( $_POST ) ){
       if( ereg( "_A#", $key ) ){        //Across clue.
         $clueNum = $val;
-        $temp = array( $clueNum, ucfirst( $_POST[$clueNum . '_A'] ), strtoupper( $_POST[$clueNum . '_AA'] ) );
+        $temp = array( $clueNum, ucfirst( $_POST[$clueNum . '_A'] ), strtoupper( $_POST[$clueNum . '_AA'] ), $_POST[$clueNum . '_A_N']);
         array_push( $across, $temp );
       }
       elseif( ereg( "_D#", $key ) ){    //Down clue.
         $clueNum = $val;
-        $temp = array( $clueNum, $_POST[$clueNum . '_D'], $_POST[$clueNum . '_DA'] );
+        $temp = array( $clueNum, $_POST[$clueNum . '_D'], $_POST[$clueNum . '_DA'], $_POST[$clueNum . '_D_N']);
         array_push( $down, $temp );        
       }
     }
@@ -105,8 +105,8 @@ HD;
     $complete = 'CHECKED';
     
     for( $i = 0; $i < max( count( $across ), count( $down ) ); $i++ ){
-      list( $keyA, $valA ) = each( $across );
-      list( $keyD, $valD ) = each( $down );
+      list( $keyA, $valA) = each( $across );
+      list( $keyD, $valD) = each( $down );
       
       if( $complete == 'CHECKED' ){
         if( $i < count( $across ) && ( strrpos( $valA[2], '_' ) || strlen( $valA[2] ) == 0 ) ){
@@ -122,6 +122,7 @@ HD;
       if( $valA != null ){
       echo  "<input type=\"TEXT\" name=\"{$valA[0]}\" value=\"{$valA[0]}\" class=\"numberInput\">";
       echo  "<input type=\"TEXT\" name=\"{$valA[0]}A\" value=\"{$valA[1]}\" class=\"clueInput\">";
+      echo "<p> {$valA[3]} </p>";
       }
       else
       echo  "&nbsp;";
@@ -136,6 +137,7 @@ HD;
       if( $valD != null ){
       echo  "<input type=\"TEXT\" name=\"{$valD[0]}\" value=\"{$valD[0]}\" class=\"numberInput\">";
       echo  "<input type=\"TEXT\" name=\"{$valD[0]}D\" value=\"{$valD[1]}\" class=\"clueInput\">";
+      echo "<p> {$valD[3]} </p>";
       }
       else
       echo "&nbsp;";

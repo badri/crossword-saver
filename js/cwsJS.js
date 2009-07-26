@@ -328,7 +328,7 @@ function writeclueAnswerBoxes(){
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A', "type='TEXT'", "name='" + clueNum + "_A'", "className='clueInput'", "value=' (" + answerLen + ")'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_AA', "type='TEXT'", "name='" + clueNum + "_AA'", "className='answerInput'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_', "type='HIDDEN'", "name='" + clueNum + "_A_'", "value='" + answerLen + "'" ) );
-        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='TEXT'", "name='" + clueNum + "_A_'", "value='" + squareNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='TEXT'", "name='" + clueNum + "_A_N'", "value='" + squareNum + "'" ) );
         container.appendChild( document.createElement( 'BR' ) );
       }
     }
@@ -344,7 +344,7 @@ function writeclueAnswerBoxes(){
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D', "type='TEXT'", "name='" + clueNum + "_D'", "className='clueInput'", "value=' (" + answerLen + ")'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_DA', "type='TEXT'", "name='" + clueNum + "_DA'", "className='answerInput'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_', "type='HIDDEN'", "name='" + clueNum + "_D_'", "value='" + answerLen + "'" ) );
-        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='TEXT'", "name='" + clueNum + "_A_'", "value='" + squareNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_N', "type='TEXT'", "name='" + clueNum + "_D_N'", "value='" + squareNum + "'" ) );
         container.appendChild( document.createElement( 'BR' ) );
       }
     }
