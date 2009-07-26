@@ -195,10 +195,11 @@
     $complete = ( $_POST['complete'] ) ? 'Y' : 'N';
     $result = $DBAccess->queryDB( "INSERT INTO `cs_crossword` ( gridId, complete, dateAdded, user ) VALUES ( '$id', '$complete', '$dateAdded', 'user' )" );
     $id = mysql_insert_id();
-    while( list( $key, $val ) = each( $_POST ) ){
+    while( list( $key, $val) = each( $_POST ) ){
       if( ereg( "^[0-9]{1,2}(D|A)$", $key ) ){
         $ans = addslashes( $_POST[$key."A"] );
-        $DBAccess->queryDB( "INSERT INTO `cs_clues` ( crosswordId, clue, answer, code ) VALUES ( '$id', '$val', '$ans', '$key' )" );
+        $sq = (int)$_POST[$key."S"];
+        $DBAccess->queryDB( "INSERT INTO `cs_clues` ( crosswordId, clue, answer, code, square) VALUES ( '$id', '$val', '$ans', '$key', '$sq' )" );
       }
     }
     

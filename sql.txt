@@ -27,6 +27,7 @@ CREATE TABLE `cs_clues` (
   `clue` varchar(100) default NULL,
   `answer` varchar(30) default NULL,
   `code` varchar(10) default NULL,
+  `square` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM COMMENT='Contains clues and answers for each crossword.' 
 AUTO_INCREMENT=1968 ;

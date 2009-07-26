@@ -122,7 +122,7 @@ HD;
       if( $valA != null ){
       echo  "<input type=\"TEXT\" name=\"{$valA[0]}\" value=\"{$valA[0]}\" class=\"numberInput\">";
       echo  "<input type=\"TEXT\" name=\"{$valA[0]}A\" value=\"{$valA[1]}\" class=\"clueInput\">";
-      echo "<p> {$valA[3]} </p>";
+      echo  "<input type=\"TEXT\" name=\"{$valA[0]}AS\" value=\"{$valA[3]}\" class=\"clueInput\">";
       }
       else
       echo  "&nbsp;";
@@ -137,7 +137,7 @@ HD;
       if( $valD != null ){
       echo  "<input type=\"TEXT\" name=\"{$valD[0]}\" value=\"{$valD[0]}\" class=\"numberInput\">";
       echo  "<input type=\"TEXT\" name=\"{$valD[0]}D\" value=\"{$valD[1]}\" class=\"clueInput\">";
-      echo "<p> {$valD[3]} </p>";
+      echo  "<input type=\"TEXT\" name=\"{$valD[0]}DS\" value=\"{$valD[3]}\" class=\"clueInput\">";
       }
       else
       echo "&nbsp;";
