@@ -209,20 +209,6 @@ function domCreateElement( tag, id ){
   return n;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Crossword methods start here.
 var CW;			//This variable allows global access to the crossword object.
 var winTO;		//Used to keep a reference to the timeout.
@@ -237,7 +223,7 @@ var clueInputDelay = 3;	//How many seconds delay before writing the inputs for c
  */
 function drawCrossword( i, j ){
   CW = new Crossword( i, j );
-  document.write( "<br><table border=\"1\" style=\"border-style: solid; border-width: 3\" bordercolor=\"#111111\" align=\"center\"><tr><td><table cellspacing=\"0\" cellpadding=\"0\">" )
+  document.write( "<br><table border=\"1\" style=\"border-style: solid; border-width: 2\" bordercolor=\"#111111\" align=\"center\"><tr><td><table cellspacing=\"0\" cellpadding=\"0\">" );
   for( var x = 0; x < i; x++ ){
     document.write( "<tr>" );
     for( var y = 1; y <= j; y++ ){
@@ -337,10 +323,12 @@ function writeclueAnswerBoxes(){
       for( var i = 0; i < CW.across.length; i++ ){
         var clueNum = CW.across[i][0];
         var answerLen = CW.across[i][1];
+	var squareNum = CW.across[i][2];
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A#', "type='TEXT'", "name='" + clueNum + "_A#'", "className='numberInput'", "value='" + clueNum + "'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A', "type='TEXT'", "name='" + clueNum + "_A'", "className='clueInput'", "value=' (" + answerLen + ")'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_AA', "type='TEXT'", "name='" + clueNum + "_AA'", "className='answerInput'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_', "type='HIDDEN'", "name='" + clueNum + "_A_'", "value='" + answerLen + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='TEXT'", "name='" + clueNum + "_A_'", "value='" + squareNum + "'" ) );
         container.appendChild( document.createElement( 'BR' ) );
       }
     }
@@ -351,10 +339,12 @@ function writeclueAnswerBoxes(){
       for( var i = 0; i < CW.down.length; i++ ){
         var clueNum = CW.down[i][0];
         var answerLen = CW.down[i][1];
+	var squareNum = CW.down[i][2];
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D#', "type='TEXT'", "name='" + clueNum + "_D#'", "className='numberInput'", "value='" + clueNum + "'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D', "type='TEXT'", "name='" + clueNum + "_D'", "className='clueInput'", "value=' (" + answerLen + ")'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_DA', "type='TEXT'", "name='" + clueNum + "_DA'", "className='answerInput'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_', "type='HIDDEN'", "name='" + clueNum + "_D_'", "value='" + answerLen + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='TEXT'", "name='" + clueNum + "_A_'", "value='" + squareNum + "'" ) );
         container.appendChild( document.createElement( 'BR' ) );
       }
     }
@@ -487,7 +477,7 @@ function removeNumbers(){
 
 /**
  * Helper function: prints out the crossword grid in an alert box.
- */ 
+ */
 function displayCrossword(){
   var txt = '';
   for( var i = 0; i < this.rows + 2; i++ ){
@@ -509,11 +499,11 @@ function addClue( r, c, num, orient ){
     else
       curSq = CW.grid[r+len][c];
   }
-
+  var square_no = ( r - 1 ) * CW.cols + c;
   if( orient == "_" )
-    CW.across[CW.across.length] = new Array( num, len );
+    CW.across[CW.across.length] = new Array( num, len, square_no);
   else
-    CW.down[CW.down.length] = new Array( num, len );
+    CW.down[CW.down.length] = new Array( num, len, square_no);
 }
 
 function gridToString(){
@@ -525,15 +515,3 @@ function gridToString(){
   }
   return txt;
 }
-
-
-
-
-
-
-
-
-
-
-
-
