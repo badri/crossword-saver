@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import Image, ImageFont, ImageDraw, ImageChops
 
 fontfile = r"C:\WINDOWS\Fonts\arialbd.ttf"
