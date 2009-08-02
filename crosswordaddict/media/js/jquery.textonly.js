@@ -51,7 +51,7 @@ function(e)
   if((e.ctrlKey && key == 118 /* firefox */) || (e.ctrlKey && key == 86) /* opera */
      || (e.shiftKey && key == 45)) return true;
   // if a number was not pressed
-  if(key < 97 || key > 122)
+  if(key < 65 || key > 90)
     {
 
    if(

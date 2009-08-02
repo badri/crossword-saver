@@ -31,20 +31,55 @@ $(document).ready(function(){
                else {
                    var next_square = parseInt(this.id) + 15;
                }
-            }
+            }          
             var next_id = "#"+next_square;
             if($(next_id).css("background-color") != "black") {
             $(next_id).focus();
-        }
+        }n
     });
 });
 </script> 
 <style type="text/css">
+@font-face {
+    font-family:"ballpoint";
+    src:url("/site_media/fonts/fg-ballpoint.ttf");
+}
+.grid {
+    border-style:solid;
+    border-color:black;
+    border-width:1px;
+}
+
+.black-box {
+    color:black; 
+    background-color:black; 
+    margin:-3px;
+    width:30px; 
+    height:30px; 
+    font-family:ballpoint, serif; 
+    font-weight:bold; 
+    font-size:20px; 
+    text-align:center;
+    border-width:1px;
+}
+
+.tile {
+    color:blue; 
+    margin:-3px;
+    width:30px; 
+    height:30px; 
+    font-family:ballpoint, serif; 
+    font-weight:bold; 
+    font-size:20px; 
+    text-align:center;
+    border-width:1px;
+}
+
 </style>
 </head>
 <body>
 
-<table style="border-style:solid;border-color:black;border-width:1px;">
+<table class="grid">
 <tr>
 {% for i in crossword %}
 {% if forloop.counter0|divisibleby:"15" %}
@@ -52,17 +87,16 @@ $(document).ready(function(){
 <tr>
 {% endif %}
 {% ifequal i.grid "0" %}
-<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" style="color:black; background-color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center;border-width:1px;"/></td>
+<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" class="black-box"/></td>
 {% else %}
 {% if i.code %}
-<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" style="color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center; border-width:1px;background-image:url('/site_media/img/sq/{{ i.code }}.png');"/></td>
+<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/></td>
 {% else %}
-<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" style="color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center; border-width:1px;"/></td>
+<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" class="tile"/></td>
 {% endif %}
 {% endifequal %}
 {% endfor %}
 </tr>
-</table> 
-
+</table>
 </body>
 </html>
