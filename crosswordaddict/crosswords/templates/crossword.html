@@ -1,6 +1,6 @@
 <html>
 <head>
-<script type="text/javascript" src="/site_media/js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
 <script type="text/javascript" src="/site_media/js/jquery.textonly.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
@@ -33,11 +33,28 @@ $(document).ready(function(){
                }
             }          
             var next_id = "#"+next_square;
-            if($(next_id).css("background-color") != "black") {
-            $(next_id).focus();
-        }n
+            if($(next_id).css("background-color") != "black") {                
+                $(next_id).focus();
+            }
     });
-});
+
+   $(".clue").mouseover(function(e) {
+           $(this).css("color", "red");
+   }).mouseout(function(e) {
+      $(this).css("color", "black");
+   });
+
+   $(".across_clues > .clue").click(function(e) {
+        align = "across";
+        $("#"+this.id.slice(0, this.id.length-1)).focus();          
+   });
+
+   $(".down_clues > .clue").click(function(e) {
+        align = "down";
+        $("#"+this.id.slice(0, this.id.length-1)).focus();  
+   });
+
+ });
 </script> 
 <style type="text/css">
 @font-face {
@@ -51,7 +68,7 @@ $(document).ready(function(){
 }
 
 .black-box {
-    color:black; 
+    color:black;
     background-color:black; 
     margin:-3px;
     width:30px; 
@@ -64,7 +81,7 @@ $(document).ready(function(){
 }
 
 .tile {
-    color:blue; 
+    color:blue;
     margin:-3px;
     width:30px; 
     height:30px; 
@@ -75,9 +92,41 @@ $(document).ready(function(){
     border-width:1px;
 }
 
+.across_clues {
+    float: right;
+    font-family:sans-serif;
+    width: 400px;
+    border-right: 1px dashed gray;
+}
+
+.down_clues {
+    float: right;
+    margin-left: 50px;
+    font-family:sans-serif;
+    width: 400px;
+}
+
+.clue {
+    padding:2px;
+    font-weight: bold;
+    color: black;
+}
+
 </style>
 </head>
 <body>
+
+<div class="down_clues">
+{% for down_clue in down %}
+<div id="{{ down_clue.square }}c" class="clue"> {{ down_clue.code }} {{ down_clue.clue }}</div>
+{% endfor %}
+</div>
+
+<div class="across_clues">
+{% for across_clue in across %}
+<div id="{{ across_clue.square }}c" class="clue"> {{ across_clue.code }} {{ across_clue.clue }}</div>
+{% endfor %}
+</div>
 
 <table class="grid">
 <tr>
@@ -87,12 +136,18 @@ $(document).ready(function(){
 <tr>
 {% endif %}
 {% ifequal i.grid "0" %}
-<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" class="black-box"/></td>
+<td>
+<input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" class="black-box"/>
+</td>
 {% else %}
 {% if i.code %}
-<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/></td>
+<td>
+<input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1"  class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/>
+</td>
 {% else %}
-<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" class="tile"/></td>
+<td>
+<input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" class="tile"/>
+</td>
 {% endif %}
 {% endifequal %}
 {% endfor %}
