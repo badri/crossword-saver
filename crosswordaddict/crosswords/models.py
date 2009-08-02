@@ -15,6 +15,7 @@ class CsClues(models.Model):
     clue = models.CharField(max_length=300, blank=True)
     answer = models.CharField(max_length=90, blank=True)
     code = models.CharField(max_length=30, blank=True)
+    square = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = u'cs_clues'
 

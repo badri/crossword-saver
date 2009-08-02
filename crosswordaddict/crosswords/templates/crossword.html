@@ -3,14 +3,13 @@
 <script type="text/javascript" src="/site_media/js/jquery-1.2.6.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-
 }
 </script> 
 <style type="text/css">
 </style>
 </head>
 <body>
-<table>
+<table style="border-style:solid;border-color:black;border-width:1px;">
 <tr>
 {% for i in grid|make_list %}
 
@@ -19,13 +18,13 @@ $(document).ready(function(){
 <tr>
 {% endif %}
 {% ifequal i "0" %}
-<td><input type="text" name="fname" size="1" maxlength="1" disabled="disabled" style="color:black; background-color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center;"/></td>
+<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" style="color:black; background-color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center;border-width:1px;"/></td>
 {% else %}
-<td><input type="text" name="fname" size="1" maxlength="1" style="color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center; background-image:url('/site_media/img/sq/12.png');"/></td>
+<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" style="color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center; border-width:1px;"/></td>
 {% endifequal %}
 {% endfor %}
 </tr>
 </table> 
-</p>
+
 </body>
 </html>
