@@ -3,24 +3,42 @@
 <script type="text/javascript" src="/site_media/js/jquery-1.2.6.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-}
+var align = "down";
+
+    $("td>input").keypress(function(e) {
+        if(align == "across") {
+           var next_square = parseInt(this.id) + 1;
+        }
+        else {
+           var next_square = parseInt(this.id) + 14 + 1;
+        }
+        var next_id = "#"+next_square;
+        if($(next_id).css("background-color") != "black") {
+            $(next_id).focus();
+        }
+    });
+});
 </script> 
 <style type="text/css">
 </style>
 </head>
 <body>
+
 <table style="border-style:solid;border-color:black;border-width:1px;">
 <tr>
-{% for i in grid|make_list %}
-
+{% for i in crossword %}
 {% if forloop.counter0|divisibleby:"15" %}
 </tr>
 <tr>
 {% endif %}
-{% ifequal i "0" %}
+{% ifequal i.grid "0" %}
 <td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" style="color:black; background-color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center;border-width:1px;"/></td>
 {% else %}
+{% if i.code %}
+<td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" style="color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center; border-width:1px;background-image:url('/site_media/img/sq/{{ i.code }}.png');"/></td>
+{% else %}
 <td><input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" style="color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center; border-width:1px;"/></td>
+{% endif %}
 {% endifequal %}
 {% endfor %}
 </tr>
