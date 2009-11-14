@@ -4,7 +4,9 @@
 <script type="text/javascript" src="/site_media/js/jquery.textonly.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
+    // defaults
     var align = "across";
+    var in_focus = "1";
     $("td>input").textonly();
     $("td>input").keypress(function(e) {
             if(e.keyCode == 8) { // backspace
@@ -35,6 +37,20 @@ $(document).ready(function(){
             var next_id = "#"+next_square;
             if($(next_id).css("background-color") != "black") {                
                 $(next_id).focus();
+                /* var can_strike_through = false;
+                if(align == "across") {
+                   inc = 1;
+                }
+                else {
+                   inc = 15;
+                }
+                var  tile_iter = in_focus;
+                while($("#"+tile_iter).css("background-color") != "black" || tile_iter < 226) {
+                      var x = $("#"+tile_iter).val();
+                      alert($("#"+tile_iter).css("background-color"));
+                      tile_iter=parseInt(tile_iter) + inc;
+                }*/
+                 
             }
     });
 
@@ -46,12 +62,14 @@ $(document).ready(function(){
 
    $(".across_clues > .clue").click(function(e) {
         align = "across";
-        $("#"+this.id.slice(0, this.id.length-1)).focus();          
+        in_focus = this.id.slice(0, this.id.length-1);
+        $("#"+in_focus).focus();          
    });
 
    $(".down_clues > .clue").click(function(e) {
         align = "down";
-        $("#"+this.id.slice(0, this.id.length-1)).focus();  
+        in_focus = this.id.slice(0, this.id.length-1);
+        $("#"+in_focus).focus();  
    });
 
  });
@@ -65,6 +83,7 @@ $(document).ready(function(){
     border-style:solid;
     border-color:black;
     border-width:1px;
+    margin-bottom: 20px;
 }
 
 .black-box {
@@ -127,7 +146,7 @@ $(document).ready(function(){
 <div id="{{ across_clue.square }}c" class="clue"> {{ across_clue.code }} {{ across_clue.clue }}</div>
 {% endfor %}
 </div>
-
+<form action="." method="GET">
 <table class="grid">
 <tr>
 {% for i in crossword %}
@@ -137,21 +156,23 @@ $(document).ready(function(){
 {% endif %}
 {% ifequal i.grid "0" %}
 <td>
-<input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" disabled="disabled" class="black-box"/>
+<input type="text" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
 </td>
 {% else %}
 {% if i.code %}
 <td>
-<input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1"  class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/>
+<input type="text" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/>
 </td>
 {% else %}
 <td>
-<input type="text" id="{{ forloop.counter }}" name="box" size="1" maxlength="1" class="tile"/>
+<input type="text" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" class="tile"/>
 </td>
 {% endif %}
 {% endifequal %}
 {% endfor %}
 </tr>
 </table>
+<input type="submit" value="save" />
+</form>
 </body>
 </html>
