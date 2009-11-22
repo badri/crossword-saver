@@ -8,9 +8,13 @@
 
 @import <Foundation/CPObject.j>
 
+@import "GridView.j"
+@import "SquareView.j"
+@import "Square.j"
 
 @implementation AppController : CPObject
 {
+   CPCollectionView gridView;
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
@@ -25,7 +29,14 @@
     
     [view setAutoresizingMask:CPViewMinXMargin | CPViewMaxXMargin | CPViewMinYMargin | CPViewMaxYMargin];
     
-    [contentView addSubview:view];    
+    [contentView addSubview:view];
+
+    gridView = [[GridView alloc] initWithFrame:CGRectMake(0.0, 0.0, 176.0, 400.0)];
+
+    var squares = [Square getExampleGrid];
+
+    [gridView setContent:squares];
+
 }
 
 @end

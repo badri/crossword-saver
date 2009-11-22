@@ -12,6 +12,8 @@
     {
         [self setMinItemSize:CGSizeMake(CGRectGetWidth([self bounds]), 225)];
         [self setMaxItemSize:CGSizeMake(CGRectGetWidth([self bounds]), 225)];
+        [self setMaxNumberOfRows:15];
+        [self setMaxNumberOfColumns:15];
     
         itemPrototype = [[CPCollectionViewItem alloc] init];
         [itemPrototype setView:[[SquareView alloc] initWithFrame:CGRectMakeZero()]];
