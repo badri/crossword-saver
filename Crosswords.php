@@ -199,7 +199,7 @@
       if( ereg( "^[0-9]{1,2}(D|A)$", $key ) ){
         $ans = addslashes( $_POST[$key."A"] );
         $sq = (int)$_POST[$key."S"];
-        $DBAccess->queryDB( "INSERT INTO `cs_clues` ( crosswordId, clue, answer, code, square) VALUES ( '$id', '$val', '$ans', '$key', '$sq' )" );
+        $DBAccess->queryDB( "INSERT INTO `cs_clues` ( crosswordId, clue, answer, code, square) VALUES ( '$id', \"$val\", '$ans', '$key', '$sq' )" );
       }
     }
     

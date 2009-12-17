@@ -87,11 +87,11 @@ $(document).ready(function(){
 }
 
 .black-box {
-    color:black;
-    background-color:black; 
+    color:#111111;
+    background-color:#111111;
     margin:-3px;
-    width:30px; 
-    height:30px; 
+    width:31px; 
+    height:31px; 
     font-family:ballpoint, serif; 
     font-weight:bold; 
     font-size:20px; 
@@ -102,13 +102,15 @@ $(document).ready(function(){
 .tile {
     color:blue;
     margin:-3px;
-    width:30px; 
-    height:30px; 
+    width:29px; 
+    height:29px; 
     font-family:ballpoint, serif; 
     font-weight:bold; 
     font-size:20px; 
     text-align:center;
     border-width:1px;
+    border: 1px solid;
+    border-color: black;
 }
 
 .across_clues {
@@ -120,7 +122,7 @@ $(document).ready(function(){
 
 .down_clues {
     float: right;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
     font-family:sans-serif;
     width: 400px;
 }
@@ -156,16 +158,19 @@ $(document).ready(function(){
 {% endif %}
 {% ifequal i.grid "0" %}
 <td>
-<input type="text" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
+<div type="text" id="box_{{ forloop.counter }}" class="black-box"/>
+<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
 </td>
 {% else %}
 {% if i.code %}
 <td>
-<input type="text" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/>
+<div id="box_{{ forloop.counter }}" class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/>
+<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');" />
 </td>
 {% else %}
 <td>
-<input type="text" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" class="tile"/>
+<div id="{{ forloop.counter }}" class="tile"/>
+<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" class="tile"/>
 </td>
 {% endif %}
 {% endifequal %}
