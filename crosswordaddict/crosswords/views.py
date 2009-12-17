@@ -21,18 +21,8 @@ def index(request):
             for i,j in enumerate(grid):
                 if i+1 in number_info.keys():
                     crossword.append({'grid':j, 'code': number_info[i+1]['code']})
-                    print 'square   = [[Square alloc] init];'
-                    print '[square setCode:@"%s"];'%(j)
-                    print '[square setGrid:@"%s"];'%( number_info[i+1]['code'])
-                    print '[array addObject:square];'
-                    print
                 else:
                     crossword.append({'grid':j, 'code': ''})
-                    print 'square   = [[Square alloc] init];'
-                    print '[square setCode:@"%s"];'%(j)
-                    print '[square setGrid:@"%s"];'%('')
-                    print '[array addObject:square];'
-                    print
                     
             #print crossword
             return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down})
