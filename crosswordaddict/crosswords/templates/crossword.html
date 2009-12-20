@@ -35,23 +35,23 @@ $(document).ready(function(){
      else {
          var next_square = parseInt(in_focus) + 15;
      }
-     // alert(next_square);
      return next_square;
   }
 
-  $(document).bind('keydown', 'c', function(){
-                     $("#box_"+in_focus).text("C");
+  var key_map = function(s){
+                     $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
+                     $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
                      $("#box_"+in_focus).css("background-color", "white");
-                     in_focus = find_next_square(); 
-                     $("#box_"+in_focus).css("background-color", "#ffffb2");                    
-                    });
-
-  $(document).bind('keydown', 'd', function(){
-                     $("#box_"+in_focus).text("D");
-                     $("#box_"+in_focus).css("background-color", "white");
-                     in_focus = find_next_square(); 
+                     var next_square = find_next_square(); 
+                     if($("#box_"+next_square).hasClass("black-box")) { return false; }
+                     in_focus = next_square;
                      $("#box_"+in_focus).css("background-color", "#ffffb2");
-                    });
+                    }
+
+  var alphabets = 'abcdefghijklmnopqrstuvwxyz';
+  for(var i=0; i <= alphabets.length; i++) {
+      $(document).bind('keydown', alphabets[i], key_map);
+  }
 
   $(document).bind('keydown', 'backspace', function(){$("#box_"+in_focus).text(""); });
 
@@ -86,8 +86,8 @@ $(document).ready(function(){
 .tile {
     color:blue;
     margin:-3px;
-    width:29px; 
-    height:29px; 
+    width:30px; 
+    height:30px; 
     font-family:ballpoint, serif; 
     font-weight:bold; 
     font-size:20px; 
@@ -117,7 +117,17 @@ $(document).ready(function(){
     color: black;
 }
 
+.letter {
+    margin-top:-10px;
+    font-family:sans-serif;
+    font-weight:normal;
+}
+
 </style>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="/site_media/js/pngfix.js"></script>
+<link rel="stylesheet" type="text/css" href="/site_media/css/ie.css" media="screen" />
+<![endif]-->
 </head>
 <body>
 
@@ -148,12 +158,17 @@ $(document).ready(function(){
 {% else %}
 {% if i.code %}
 <td>
-<div id="box_{{ forloop.counter }}" class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');"/>
-<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile" style="background-image:url('/site_media/img/sq/{{ i.code }}.png');" />
+<div id="box_{{ forloop.counter }}" class="tile">
+<div align="left" style="font-size:12px; color:black;font:verdana;">{{ i.code }}</div>
+<div class="letter"></div>
+</div>
+<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile"/>
 </td>
 {% else %}
 <td>
 <div id="box_{{ forloop.counter }}" class="tile"/>
+<div align="left" style="width:30px; height:15px;"></div>
+<div class="letter"></div>
 <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" class="tile"/>
 </td>
 {% endif %}
