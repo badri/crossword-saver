@@ -8,9 +8,9 @@
 
 @import <Foundation/CPObject.j>
 
-@import "GridView.j"
-@import "SquareView.j"
-@import "Square.j"
+//@import "GridView.j"
+//@import "SquareView.j"
+//@import "Square.j"
 
 @implementation AppController : CPObject
 {
@@ -21,21 +21,29 @@
 {
     var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask],
         contentView = [theWindow contentView];
-    // Create and Center our Container View
-    var view = [[CPView alloc] initWithFrame:CGRectMake(0, 0, 700.0, 424.0)];
-    [view setCenter:[contentView center]];
-    
-    [view setBackgroundColor:[CPColor colorWithRed:212.0 / 255.0 green:221.0 / 255.0 blue:230.0 / 255.0 alpha:1.0]];
-    
-    [view setAutoresizingMask:CPViewMinXMargin | CPViewMaxXMargin | CPViewMinYMargin | CPViewMaxYMargin];
-    
-    [contentView addSubview:view];
 
-    gridView = [[GridView alloc] initWithFrame:CGRectMake(0.0, 0.0, 176.0, 400.0)];
+    var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
 
-    var squares = [Square getExampleGrid];
+    [label setStringValue:@"Hello World!"];
+    [label setFont:[CPFont boldSystemFontOfSize:24.0]];
 
-    [gridView setContent:squares];
+    [label sizeToFit];
+
+    [label setAutoresizingMask:CPViewMinXMargin | CPViewMaxXMargin | CPViewMinYMargin | CPViewMaxYMargin];
+    [label setCenter:[contentView center]];
+
+    [contentView addSubview:label];
+
+    [theWindow orderFront:self];
+
+    // Uncomment the following line to turn on the standard menu bar.
+    //[CPMenu setMenuBarVisible:YES];
+
+//     gridView = [[GridView alloc] initWithFrame:CGRectMake(0.0, 0.0, 176.0, 400.0)];
+
+//     var squares = [Square getExampleGrid];
+
+//     [gridView setContent:squares];
 
 }
 
