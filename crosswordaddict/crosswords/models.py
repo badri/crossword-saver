@@ -8,6 +8,7 @@
 # into your database.
 
 from django.db import models
+from fields import CrosswordField
 
 class CsClues(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -23,7 +24,7 @@ class CsClues(models.Model):
 
 class CsCrossword(models.Model):
     id = models.IntegerField(primary_key=True)
-    gridid = models.IntegerField(db_column='gridId') # Field name made lowercase.
+    gridid = CrosswordField(db_column='gridId') # Field name made lowercase.
     complete = models.CharField(max_length=3, blank=True)
     dateadded = models.DateTimeField(db_column='dateAdded') # Field name made lowercase.
     user = models.CharField(max_length=90)
