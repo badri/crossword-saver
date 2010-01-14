@@ -16,6 +16,8 @@ class CsClues(models.Model):
     answer = models.CharField(max_length=90, blank=True)
     code = models.CharField(max_length=30, blank=True)
     square = models.IntegerField(null=True, blank=True)
+    def __unicode__(self):
+        return "%s"%(self.clue)
     class Meta:
         db_table = u'cs_clues'
 
@@ -25,12 +27,16 @@ class CsCrossword(models.Model):
     complete = models.CharField(max_length=3, blank=True)
     dateadded = models.DateTimeField(db_column='dateAdded') # Field name made lowercase.
     user = models.CharField(max_length=90)
+    def __unicode__(self):
+        return "%d"%(self.id)
     class Meta:
         db_table = u'cs_crossword'
 
 class CsPresets(models.Model):
     id = models.IntegerField(primary_key=True)
     grid = models.TextField(unique=True)
+    def __unicode__(self):
+        return "%s"%(self.grid)    
     class Meta:
         db_table = u'cs_presets'
 

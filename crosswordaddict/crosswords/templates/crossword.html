@@ -64,13 +64,13 @@ $(document).ready(function(){
     src:url("/site_media/fonts/fg-ballpoint.ttf");
 }
 .grid {
-    border-style:solid;
+    /*border-style:solid;
     border-color:black;
-    border-width:1px;
+    border-width:1px;*/
     margin-bottom: 20px;
 }
 
-.black-box {
+.black-box1 {
     color:#111111;
     background-color:#111111;
     margin:-3px;
@@ -80,6 +80,35 @@ $(document).ready(function(){
     font-weight:bold; 
     font-size:20px; 
     text-align:center;
+    background-image:url('/site_media/img/sq1.png');
+    border-width:1px;
+}
+
+.black-box2 {
+    color:#111111;
+    background-color:#111111;
+    margin:-3px;
+    width:31px; 
+    height:31px; 
+    font-family:ballpoint, serif; 
+    font-weight:bold; 
+    font-size:20px; 
+    text-align:center;
+    background-image:url('/site_media/img/sq2.png');
+    border-width:1px;
+}
+
+.black-box3 {
+    color:#111111;
+    background-color:#111111;
+    margin:-3px;
+    width:31px; 
+    height:31px; 
+    font-family:ballpoint, serif; 
+    font-weight:bold; 
+    font-size:20px; 
+    text-align:center;
+    background-image:url('/site_media/img/sq3.png');
     border-width:1px;
 }
 
@@ -119,7 +148,16 @@ $(document).ready(function(){
 
 .letter {
     margin-top:-10px;
-    font-family:sans-serif;
+    font-family:ballpoint, sans-serif;
+    font-weight:normal;
+}
+
+.number {
+    padding-top:1px;
+    padding-left:1px;
+    font-size:12px;
+    color:black;
+    font:sans-serif;
     font-weight:normal;
 }
 
@@ -152,14 +190,14 @@ $(document).ready(function(){
 {% endif %}
 {% ifequal i.grid "0" %}
 <td>
-<div type="text" id="box_{{ forloop.counter }}" class="black-box"/>
+<div type="text" id="box_{{ forloop.counter }}" class="{% cycle 'black-box1' 'black-box2' 'black-box3'%}"/>
 <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
 </td>
 {% else %}
 {% if i.code %}
 <td>
 <div id="box_{{ forloop.counter }}" class="tile">
-<div align="left" style="font-size:12px; color:black;font:verdana;">{{ i.code }}</div>
+<div align="left" class="number">{{ i.code }}</div>
 <div class="letter"></div>
 </div>
 <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile"/>

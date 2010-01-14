@@ -1,0 +1,6 @@
+#!/bin/bash
+pushd /var/run
+mkdir mysqld
+pushd mysqld
+ln -s /opt/lampp/var/mysql/mysql.sock mysqld.sock
+popd
