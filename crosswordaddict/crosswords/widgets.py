@@ -2,6 +2,8 @@ from django.forms.widgets import Input
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.db.models import get_model
+from django.core.exceptions import ObjectDoesNotExist
+
 
 class CrosswordWidget(Input):
     input_type = 'text'
@@ -9,7 +11,10 @@ class CrosswordWidget(Input):
     def render(self, name, value, attrs=None):
         html = '' # super(CrosswordWidget, self).render(name, value, attrs)
         grid_model = get_model('crosswords', 'CsPresets')
-        csgrid = grid_model.objects.get(id=value).grid
+        try:
+            csgrid = grid_model.objects.get(id=value).grid
+        except ObjectDoesNotExist:
+            csgrid = '1'*255
         js = u"<script>drawCrossword( 15, 15 ); preset('%s');</script>" % (csgrid)
         return mark_safe("\n".join([html, js]))
 

@@ -33,6 +33,12 @@ class CsCrossword(models.Model):
     class Meta:
         db_table = u'cs_crossword'
 
+    def save(self, *args, **kwargs):
+        print args
+        print kwargs
+        super(CsCrossword, self).save(*args, **kwargs) # Call the "real" save() method.
+
+
 class CsPresets(models.Model):
     id = models.IntegerField(primary_key=True)
     grid = models.TextField(unique=True)
@@ -40,4 +46,3 @@ class CsPresets(models.Model):
         return "%s"%(self.grid)    
     class Meta:
         db_table = u'cs_presets'
-
