@@ -2,6 +2,11 @@
 <head>
 <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
 <script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.9.js"></script>
+<script type="text/javascript" src="/site_media/js/cufon-yui.js"></script>
+<script type="text/javascript" src="/site_media/js/ballpoint_400.font.lh.js"></script>
+<script type="text/javascript">
+   Cufon.replace('.letter');
+</script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
     // defaults
@@ -46,6 +51,7 @@ $(document).ready(function(){
                      if($("#box_"+next_square).hasClass("black-box")) { return false; }
                      in_focus = next_square;
                      $("#box_"+in_focus).css("background-color", "#ffffb2");
+                     Cufon.replace('.letter');
                     }
 
   var alphabets = 'abcdefghijklmnopqrstuvwxyz';
@@ -168,7 +174,6 @@ $(document).ready(function(){
 <![endif]-->
 </head>
 <body>
-
 <div class="down_clues">
 {% for down_clue in down %}
 <div id="{{ down_clue.square }}c" class="clue"> {{ down_clue.code }} {{ down_clue.clue }}</div>
