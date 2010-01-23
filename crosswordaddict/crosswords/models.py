@@ -42,6 +42,7 @@ class CsCrossword(models.Model):
 class CsPresets(models.Model):
     id = models.IntegerField(primary_key=True)
     grid = models.TextField(unique=True)
+    answers = models.TextField(blank=True)
     def __unicode__(self):
         return "%s"%(self.grid)    
     class Meta:
