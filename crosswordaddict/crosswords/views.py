@@ -26,11 +26,10 @@ def index(request):
                     ans = answers[i]
                 except IndexError:
                     ans = ''
-                print i, ans
                 if i+1 in number_info.keys():
                     crossword.append({'grid':j, 'code': number_info[i+1]['code'], 'ans': ans})
                 else:
-                    crossword.append({'grid':j, 'code': '', 'ans': ans})                    
+                    crossword.append({'grid':j, 'code': '', 'ans': ans})
             # print crossword
             return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': grid_id})
         else:
@@ -49,17 +48,18 @@ def crossword_index(request):
             grid_id = request.GET['grid_id']
             grid = CsPresets.objects.get(id=grid_id)
             ans = []
-            for i in range(1,225):
+            for i in range(1,226):
                 try:
-                    ans.append(request.GET[str(i)])
+                    if not request.GET[str(i)]:
+                        ans.append(' ')
+                    else:
+                        ans.append(request.GET[str(i)])
                 except MultiValueDictKeyError:
                     ans.append(' ')
 
-            for i,j in enumerate(ans):
-                print i+1, j
-            
             grid.answers = ''.join(ans)
             print grid.answers
+            print len(grid.answers)
             grid.save()
             return render_to_response('index.html')
         else:
