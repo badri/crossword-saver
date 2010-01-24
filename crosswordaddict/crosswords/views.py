@@ -19,7 +19,7 @@ def index(request):
             down = [({"square":int(x[0]), "code":x[1][:-1], "clue":x[2]}) for x in cs_clues if x[1][-1]=='D']           
             #print across
             #print down
-            print answers
+            #print answers
             crossword = []
             for i,j in enumerate(grid):
                 try:
@@ -30,7 +30,7 @@ def index(request):
                     crossword.append({'grid':j, 'code': number_info[i+1]['code'], 'ans': ans})
                 else:
                     crossword.append({'grid':j, 'code': '', 'ans': ans})
-            # print crossword
+            #print crossword
             return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': grid_id})
         else:
             return render_to_response('crossword.html', {'error':True})
@@ -58,8 +58,7 @@ def crossword_index(request):
                     ans.append(' ')
 
             grid.answers = ''.join(ans)
-            print grid.answers
-            print len(grid.answers)
+            #print grid.answers
             grid.save()
             return render_to_response('index.html')
         else:

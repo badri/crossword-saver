@@ -43,12 +43,35 @@ $(document).ready(function(){
      return next_square;
   }
 
+
+  function is_across(current_box) {
+    var next_square = parseInt(current_box) + 1;
+    var prev_square = parseInt(current_box) - 1;
+    return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) && 
+    ($("#box_"+prev_square).attr("class").indexOf("black-box") == -1) );
+    }
+
+   $(".tile").click(function(e) {
+        var current_box = this.id.split("_")[1];
+        if(is_across(current_box)) {
+           align = "across";
+        }
+        else {
+            align = "down";
+        }
+        $("#box_"+in_focus).css("background-color", "white");
+        in_focus = this.id.split("_")[1];
+        $("#box_"+in_focus).css("background-color", "#ffffb2");
+   });
+
+
+
   var key_map = function(s){
                      $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
                      $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
                      $("#box_"+in_focus).css("background-color", "white");
                      var next_square = find_next_square(); 
-                     if($("#box_"+next_square).hasClass("black-box")) { return false; }
+                     if($("#box_"+next_square).attr("class").indexOf("black-box") != -1) { Cufon.replace('.letter'); return false; }
                      in_focus = next_square;
                      $("#box_"+in_focus).css("background-color", "#ffffb2");
                      Cufon.replace('.letter');
