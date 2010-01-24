@@ -1,6 +1,6 @@
 # Create your views here.
 from crosswordaddict.crosswords.models import CsPresets, CsClues, CsCrossword
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from django.utils.datastructures import MultiValueDictKeyError
@@ -43,24 +43,24 @@ def crossword(request):
 
 
 def crossword_index(request):
-    if request.GET:
-        if 'grid_id' in request.GET:
-            grid_id = request.GET['grid_id']
+    if request.POST:
+        if 'grid_id' in request.POST:
+            grid_id = request.POST['grid_id']
             grid = CsPresets.objects.get(id=grid_id)
             ans = []
             for i in range(1,226):
                 try:
-                    if not request.GET[str(i)]:
+                    if not request.POST[str(i)]:
                         ans.append(' ')
                     else:
-                        ans.append(request.GET[str(i)])
+                        ans.append(request.POST[str(i)])
                 except MultiValueDictKeyError:
                     ans.append(' ')
 
             grid.answers = ''.join(ans)
             #print grid.answers
             grid.save()
-            return render_to_response('index.html')
+            return redirect('home')
         else:
             return render_to_response('crossword.html', {'error':True})
 

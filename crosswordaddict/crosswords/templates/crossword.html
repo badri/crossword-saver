@@ -231,7 +231,7 @@ $(document).ready(function(){
 <div id="{{ across_clue.square }}c" class="clue"> {{ across_clue.code }} {{ across_clue.clue }}</div>
 {% endfor %}
 </div>
-<form action="/crossword/" method="GET">
+<form action="/crossword/" method="POST">
 <input type="hidden" id="grid_id" name="grid_id" value="{{ grid_id }}"/>
 <table class="grid">
 <tr>
