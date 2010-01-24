@@ -1,7 +1,7 @@
 <html>
 <head>
 <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
-<script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.9.js"></script>
+<script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.8.js"></script>
 <script type="text/javascript" src="/site_media/js/cufon-yui.js"></script>
 <script type="text/javascript" src="/site_media/js/ballpoint_400.font.lh.js"></script>
 <script type="text/javascript">
@@ -23,14 +23,14 @@ $(document).ready(function(){
         align = "across";
         $("#box_"+in_focus).css("background-color", "white");
         in_focus = this.id.slice(0, this.id.length-1);
-        $("#box_"+in_focus).css("background-color", "#ffffb2");
+        $("#box_"+in_focus).css("background-color", "#99cc00");
    });
 
    $(".down_clues > .clue").click(function(e) {
         align = "down";
         $("#box_"+in_focus).css("background-color", "white");
         in_focus = this.id.slice(0, this.id.length-1);
-        $("#box_"+in_focus).css("background-color", "#ffffb2");
+        $("#box_"+in_focus).css("background-color", "#99cc00");
    });
 
   function find_next_square() {
@@ -43,11 +43,27 @@ $(document).ready(function(){
      return next_square;
   }
 
+  function find_prev_square() {
+     if(align == "across") {
+         var prev_square = parseInt(in_focus) - 1;
+     }
+     else {
+         var prev_square = parseInt(in_focus) - 15;
+     }
+     return prev_square;
+  }
 
   function is_across(current_box) {
+    if((current_box % 15 == 0) || (current_box % 15 == 1)) {
+        current_box= parseInt(current_box)+15;
+        return ($("#box_"+current_box).attr("class").indexOf("black-box") != -1);
+    }
     var next_square = parseInt(current_box) + 1;
     var prev_square = parseInt(current_box) - 1;
-    return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) && 
+    if(next_square > 255) {
+        return true;
+    }
+    return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) || 
     ($("#box_"+prev_square).attr("class").indexOf("black-box") == -1) );
     }
 
@@ -61,19 +77,29 @@ $(document).ready(function(){
         }
         $("#box_"+in_focus).css("background-color", "white");
         in_focus = this.id.split("_")[1];
-        $("#box_"+in_focus).css("background-color", "#ffffb2");
+        $("#box_"+in_focus).css("background-color", "#99cc00");
    });
 
+  var bkspc = function(s){
+              $("#box_"+in_focus).css("background-color", "white");
+              in_focus = find_prev_square(); 
+              $("#box_"+in_focus + "> .letter").text("");
+              $("#box_"+in_focus + "> input").val("");
+              $("#box_"+in_focus).css("background-color", "#99cc00");
+             }
+
+  $(document).bind('keydown', 'backspace', bkspc);
 
 
   var key_map = function(s){
                      $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
                      $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
                      $("#box_"+in_focus).css("background-color", "white");
-                     var next_square = find_next_square(); 
+                     var next_square = find_next_square();
+                     if(next_square > 225) { Cufon.replace('.letter'); return false; }
                      if($("#box_"+next_square).attr("class").indexOf("black-box") != -1) { Cufon.replace('.letter'); return false; }
                      in_focus = next_square;
-                     $("#box_"+in_focus).css("background-color", "#ffffb2");
+                     $("#box_"+in_focus).css("background-color", "#99cc00");
                      Cufon.replace('.letter');
                     }
 
@@ -82,7 +108,6 @@ $(document).ready(function(){
       $(document).bind('keydown', alphabets[i], key_map);
   }
 
-  $(document).bind('keydown', 'backspace', function(){$("#box_"+in_focus).text(""); });
 
  });
 
