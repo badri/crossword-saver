@@ -3,7 +3,7 @@ from crosswordaddict import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from crosswords.views import index, crossword_index, crossword, crossword_category
+from crosswords.views import index, crossword_index, crossword, crossword_category, crossword_detail
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -18,7 +18,8 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', index, name='home'),
     (r'^crossword/$', crossword_index),
-    (r'^crossword/(?P<id>\w+)$', crossword), # Ex: thc-9936, gc-24766
+    (r'^cword/$', crossword),
+    url(r'^/(?P<newspaper>\w+)/(?P<name>\w+)$', crossword_detail,name="crossword_detail"), # Ex: thc-9936, gc-24766
     (r'^/(?P<newspaper>\w+)/$', crossword_category), # Ex: thc, ft, custom 
 )
 

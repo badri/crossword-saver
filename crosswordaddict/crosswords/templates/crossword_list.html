@@ -1,0 +1,15 @@
+<html>
+<head>
+<style type="text/css">
+.white {color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center;}
+</style>
+</head>
+<body>
+{% for i in xwords %}
+<p> 
+<a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+<i> {{ i.description }} </i>
+</p>
+{% endfor %}
+</body>
+</html>

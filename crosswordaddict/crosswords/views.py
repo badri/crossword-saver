@@ -39,8 +39,9 @@ def index(request):
 
 
 def crossword(request):
-    pass
-
+    xwords = []
+    xwords_data = CsPresets.objects.all()
+    return render_to_response('crossword_list.html', {'xwords': xwords_data})
 
 def crossword_index(request):
     if request.POST:
@@ -69,4 +70,7 @@ def crossword_index(request):
 
     
 def crossword_category(request):
+    pass
+
+def crossword_detail(request):
     pass

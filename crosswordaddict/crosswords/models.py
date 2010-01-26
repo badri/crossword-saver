@@ -8,6 +8,7 @@
 # into your database.
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from fields import CrosswordField
 
 class CsClues(models.Model):
@@ -43,7 +44,20 @@ class CsPresets(models.Model):
     id = models.IntegerField(primary_key=True)
     grid = models.TextField(unique=True)
     answers = models.TextField(blank=True)
+    CROSSWORD_CHOICES = (
+        ('thc', 'The Hindu Crossword'),
+        ('gdn', 'The Guardian Cryptic'),
+        ('oth','Other'),
+        )
+    source = models.CharField(blank=True, max_length=3, choices=CROSSWORD_CHOICES)
+    name = models.CharField(max_length=10, blank=True)
+    description = models.CharField(max_length=150, blank=True)
+
     def __unicode__(self):
         return "%s"%(self.grid)    
+
+    def get_absolute_url(self):
+        return '/?grid_id=%d' % self.id
+
     class Meta:
         db_table = u'cs_presets'
