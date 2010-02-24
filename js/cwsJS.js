@@ -212,7 +212,7 @@ function domCreateElement( tag, id ){
 //Crossword methods start here.
 var CW;			//This variable allows global access to the crossword object.
 var winTO;		//Used to keep a reference to the timeout.
-var clueInputDelay = 3;	//How many seconds delay before writing the inputs for clues and answers.
+var clueInputDelay = 1;	//How many seconds delay before writing the inputs for clues and answers.
 
 /**
  * Draws a crossword grid of the specified dimensions. All the squares start off white.
@@ -233,10 +233,10 @@ function drawCrossword( i, j ){
       var mod_sq = sq%15;
       var mod_sq_2 = mod_sq%2;
       if((mod_sq_2 == 0) && (mod_sq >=2) && (mod_sq <=14) && !((sq-mod_sq)%30)==0) {
-      document.write( "<td id=td" + sq + "><img src=\"img/Black.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " ); CW.removeNumbers(); CW.numberCrossword();\"></td>" );
+      document.write( "<td id=td" + sq + "><img src=\"img/Black.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " );\"></td>" );
       }
       else {
-      document.write( "<td id=td" + sq + "><img src=\"img/White.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " ); CW.removeNumbers(); CW.numberCrossword();\"></td>" );
+      document.write( "<td id=td" + sq + "><img src=\"img/White.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " );\"></td>" );
 	}
     }
     document.write( "</tr>" );
@@ -331,11 +331,13 @@ function writeclueAnswerBoxes(){
         var clueNum = CW.across[i][0];
         var answerLen = CW.across[i][1];
 	var squareNum = CW.across[i][2];
-        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A#', "type='TEXT'", "name='" + clueNum + "_A#'", "className='numberInput'", "value='" + clueNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A#', "type='HIDDEN'", "name='" + clueNum + "_A#'", "className='numberInput'", "value='" + clueNum + "'" ) );
+	var cn = container.appendChild( domCreateElement( 'SPAN') );
+	cn.appendChild( document.createTextNode( clueNum ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A', "type='TEXT'", "name='" + clueNum + "_A'", "className='clueInput'", "value=' (" + answerLen + ")'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_AA', "type='TEXT'", "name='" + clueNum + "_AA'", "className='answerInput'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_', "type='HIDDEN'", "name='" + clueNum + "_A_'", "value='" + answerLen + "'" ) );
-        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='TEXT'", "name='" + clueNum + "_A_N'", "value='" + squareNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='HIDDEN'", "name='" + clueNum + "_A_N'", "value='" + squareNum + "'" ) );
         container.appendChild( document.createElement( 'BR' ) );
       }
     }
@@ -347,11 +349,13 @@ function writeclueAnswerBoxes(){
         var clueNum = CW.down[i][0];
         var answerLen = CW.down[i][1];
 	var squareNum = CW.down[i][2];
-        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D#', "type='TEXT'", "name='" + clueNum + "_D#'", "className='numberInput'", "value='" + clueNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D#', "type='HIDDEN'", "name='" + clueNum + "_D#'", "className='numberInput'", "value='" + clueNum + "'" ) );
+	var cn = container.appendChild( domCreateElement( 'SPAN') );
+	cn.appendChild( document.createTextNode( clueNum ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D', "type='TEXT'", "name='" + clueNum + "_D'", "className='clueInput'", "value=' (" + answerLen + ")'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_DA', "type='TEXT'", "name='" + clueNum + "_DA'", "className='answerInput'" ) );
         container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_', "type='HIDDEN'", "name='" + clueNum + "_D_'", "value='" + answerLen + "'" ) );
-        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_N', "type='TEXT'", "name='" + clueNum + "_D_N'", "value='" + squareNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_N', "type='HIDDEN'", "name='" + clueNum + "_D_N'", "value='" + squareNum + "'" ) );
         container.appendChild( document.createElement( 'BR' ) );
       }
     }

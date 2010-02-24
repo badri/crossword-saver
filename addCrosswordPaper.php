@@ -22,6 +22,7 @@
           <td width="50%" class="row1"><script>drawCrossword( 15, 15 );</script></td>
           <td width="50%" class="row1" align="center"><div id="CABoxes"></div></td>
         </tr>
+	<input type="BUTTON" name="write clues" value="write_clues" onClick="CW.removeNumbers(); CW.numberCrossword();" class="button">
         <tr>
           <td align="center" class="row2" colspan="2">
             
