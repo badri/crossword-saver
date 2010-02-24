@@ -230,7 +230,14 @@ function drawCrossword( i, j ){
       var sq = parseInt( x*i+y );
       var sq_alt = parseInt( (i-x-1)*i+j-y+1);
       if(sq_alt==113) sq_alt = 1234;
+      var mod_sq = sq%15;
+      var mod_sq_2 = mod_sq%2;
+      if((mod_sq_2 == 0) && (mod_sq >=2) && (mod_sq <=14) && !((sq-mod_sq)%30)==0) {
+      document.write( "<td id=td" + sq + "><img src=\"img/Black.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " ); CW.removeNumbers(); CW.numberCrossword();\"></td>" );
+      }
+      else {
       document.write( "<td id=td" + sq + "><img src=\"img/White.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " ); CW.removeNumbers(); CW.numberCrossword();\"></td>" );
+	}
     }
     document.write( "</tr>" );
   }
