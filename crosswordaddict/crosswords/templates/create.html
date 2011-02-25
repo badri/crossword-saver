@@ -1,14 +1,33 @@
 <html>
 <head>
+<link rel="stylesheet" href="/site_media/css/style.css" type="text/css">
 <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
 <script type="text/javascript" src="/site_media/js/cwsJS.js"></script>
-<style type="text/css">
-.white {color:black; margin:-3px;width:30px; height:30px; font:arial; font-weight:bold; font-size:20px; text-align:center;}
-</style>
 </head>
 <body>
 <script type="text/javascript">
 drawCrossword( 15, 15 );
 </script>
+
+<style type="text/css">
+#write_clues {
+    width:100px;
+    background: #FEF0C9;
+    font: sans-serif;
+    cursor: pointer;
+    border-width: 1px;
+    border-color: black;
+}
+</style>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    $("#write_clues").click(function() {
+        CW.removeNumbers(); CW.numberCrossword();
+    });
+});
+</script>
+<div id="write_clues">Write clues</div>
+<div id="CABoxes"></div>
 </body>
 </html>
