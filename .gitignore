@@ -1,4 +1,6 @@
 *~
 *.pyc
 Thumbs.db
+.emacs.desktop
+.emacs.desktop.lock
 

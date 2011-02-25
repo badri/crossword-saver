@@ -74,3 +74,7 @@ def crossword_category(request):
 
 def crossword_detail(request):
     pass
+
+def create(request):
+    return render_to_response('create.html')
+

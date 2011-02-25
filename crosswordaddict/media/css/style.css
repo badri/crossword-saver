@@ -7,7 +7,7 @@
 
  /* General page style. The scroll bar colours only visible in IE5.5+ */
 body {
-	background-color: #E5E5E5;
+	background-color: white;
 	margin: 0;
 	scrollbar-face-color: #DEE3E7;
 	scrollbar-highlight-color: #FFFFFF;
