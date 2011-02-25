@@ -42,7 +42,7 @@ class CsCrossword(models.Model):
 
 class CsPresets(models.Model):
     id = models.IntegerField(primary_key=True)
-    grid = models.TextField(unique=True)
+    grid = models.TextField()
     answers = models.TextField(blank=True)
     CROSSWORD_CHOICES = (
         ('thc', 'The Hindu Crossword'),
