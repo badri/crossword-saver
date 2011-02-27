@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from django.utils.datastructures import MultiValueDictKeyError
+from django.utils import simplejson
 
 def index(request):
     if request.GET:
@@ -76,5 +77,10 @@ def crossword_detail(request):
     pass
 
 def create(request):
-    return render_to_response('create.html')
+    if request.method == 'POST':
+        print request.POST
+        response = simplejson.dumps({'success':'False', 'html':'<span> abc </span>'})
+        return HttpResponse(response, mimetype="application/json")
+    else:
+        return render_to_response('create.html')
 

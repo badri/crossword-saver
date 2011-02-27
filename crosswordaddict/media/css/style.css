@@ -259,7 +259,7 @@ ol#ircrules li {
 
 .numberInput {
         font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 10px;
+        font-size: 15px;
         border: 1px solid #D1D7DC;
         padding-right: 1px;
         padding-left: 1px;
@@ -268,7 +268,7 @@ ol#ircrules li {
 
 .clueInput {
         font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 10px;
+        font-size: 15px;
         border: 1px solid #D1D7DC;
         padding-right: 1px;
         padding-left: 1px;
@@ -277,10 +277,11 @@ ol#ircrules li {
 
 .answerInput {
         font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 10px;
+        font-size: 15px;
         border: 1px solid #D1D7DC;
         padding-right: 1px;
         padding-left: 1px;
+	margin-left: 10px;
 }
 
 .concealInput {
@@ -383,3 +384,11 @@ ol#ircrules li {
 	background-repeat: repeat-y; width: 26px;
 }
 /*	End styles for inner table with rounded back corners	*/
+
+span {
+    margin-right: 20px;
+}
+
+br {
+margin-top: 30px;
+}

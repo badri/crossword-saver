@@ -360,6 +360,11 @@ function writeclueAnswerBoxes(){
       }
     }
   }
+  $("#CABoxes").append('<a href="javascript:;" class="minibutton"><span id="clue_submit">Done!</span></a>');
+  $("#clue_submit").click(function() {
+    $('#paperEntry').submit();
+  });
+
   CW.numberCrosswordFix();
 }
 
@@ -445,7 +450,8 @@ function numberCrossword(){
         }
       }
     }
-    winTO = window.setTimeout( writeclueAnswerBoxes, clueInputDelay * 1000 );
+    writeclueAnswerBoxes();
+    //winTO = window.setTimeout( writeclueAnswerBoxes2, clueInputDelay * 1000 );
   }
 }
 

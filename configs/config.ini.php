@@ -16,7 +16,7 @@ $LOG4PHP_DIR = "../Log4PHP/src/log4php/";
   define('CS_DB_UN', 'root');
  }
  if( !defined( 'CS_DB_PW' ) ){
-  define('CS_DB_PW', '');
+  define('CS_DB_PW', 'root');
  }
  if( !defined( 'CONCEAL_ANS' ) ){
   define('CONCEAL_ANS', '0');
