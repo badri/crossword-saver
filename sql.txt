@@ -60,3 +60,11 @@ CREATE TABLE `cs_presets` (
   UNIQUE KEY `id` (`grid`(128))
 ) TYPE=MyISAM AUTO_INCREMENT=15 ;
 
+ALTER TABLE cs_presets ADD COLUMN `answers` longtext NOT NULL;
+
+ALTER TABLE cs_presets ADD COLUMN `source` varchar(3) NOT NULL;
+
+ALTER TABLE cs_presets ADD COLUMN `name` varchar(10) NOT NULL;
+
+ALTER TABLE cs_presets ADD COLUMN `description` varchar(150) NOT NULL;
+

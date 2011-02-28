@@ -360,6 +360,7 @@ function writeclueAnswerBoxes(){
       }
     }
   }
+  $("#CABoxes").append('<input id="grid" name="grid" type="hidden"/>');
   $("#CABoxes").append('<a href="javascript:;" class="minibutton"><span id="clue_submit">Done!</span></a>');
   $("#clue_submit").click(function() {
     $('#paperEntry').submit();

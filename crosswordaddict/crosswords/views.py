@@ -78,7 +78,27 @@ def crossword_detail(request):
 
 def create(request):
     if request.method == 'POST':
-        print request.POST
+        xword = request.POST
+        #'''
+        for k,v in xword.iteritems():
+            if '_A#' in k:
+                clue_num = k[:-3]
+                clue_text = xword[clue_num+'_A']
+                answer = xword[clue_num+'_AA']
+                answer_length = xword[clue_num+'_A_']
+                grid_number = xword[clue_num+'_A_N']
+                print '%s %s,%s' % (clue_num, clue_text, grid_number)
+            elif '_D#' in k:
+                clue_num = k[:-3]
+                clue_text = xword[clue_num+'_D']
+                answer = xword[clue_num+'_DA']
+                answer_length = xword[clue_num+'_D_']
+                grid_number = xword[clue_num+'_D_N']
+                print '%s %s,%s' % (clue_num, clue_text, grid_number)
+            else:
+                pass
+        #'''
+        print request.POST['grid']
         response = simplejson.dumps({'success':'False', 'html':'<span> abc </span>'})
         return HttpResponse(response, mimetype="application/json")
     else:
