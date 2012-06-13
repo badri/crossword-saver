@@ -12,7 +12,6 @@ from django.core.urlresolvers import reverse
 from fields import CrosswordField
 
 class CsClues(models.Model):
-    id = models.IntegerField(primary_key=True)
     crosswordid = models.IntegerField(null=True, db_column='crosswordId', blank=True) # Field name made lowercase.
     clue = models.CharField(max_length=300, blank=True)
     answer = models.CharField(max_length=90, blank=True)
@@ -24,7 +23,6 @@ class CsClues(models.Model):
         db_table = u'cs_clues'
 
 class CsCrossword(models.Model):
-    id = models.IntegerField(primary_key=True)
     gridid = CrosswordField(db_column='gridId') # Field name made lowercase.
     complete = models.CharField(max_length=3, blank=True)
     dateadded = models.DateTimeField(db_column='dateAdded') # Field name made lowercase.
@@ -41,7 +39,6 @@ class CsCrossword(models.Model):
 
 
 class CsPresets(models.Model):
-    id = models.IntegerField(primary_key=True)
     grid = models.TextField()
     answers = models.TextField(blank=True)
     CROSSWORD_CHOICES = (

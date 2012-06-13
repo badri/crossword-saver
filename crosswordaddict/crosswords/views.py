@@ -1,4 +1,5 @@
 # Create your views here.
+from datetime import date
 from crosswordaddict.crosswords.models import CsPresets, CsClues, CsCrossword
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
@@ -79,6 +80,7 @@ def crossword_detail(request):
 def create(request):
     if request.method == 'POST':
         xword = request.POST
+        clues = []
         #'''
         for k,v in xword.iteritems():
             if '_A#' in k:
@@ -88,6 +90,7 @@ def create(request):
                 answer_length = xword[clue_num+'_A_']
                 grid_number = xword[clue_num+'_A_N']
                 print '%s %s,%s' % (clue_num, clue_text, grid_number)
+                clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'A'})
             elif '_D#' in k:
                 clue_num = k[:-3]
                 clue_text = xword[clue_num+'_D']
@@ -95,10 +98,21 @@ def create(request):
                 answer_length = xword[clue_num+'_D_']
                 grid_number = xword[clue_num+'_D_N']
                 print '%s %s,%s' % (clue_num, clue_text, grid_number)
+                clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'D'})
             else:
                 pass
         #'''
         print request.POST['grid']
+        grid = CsPresets(grid=xword['grid'], name='test', description='a test crossword')
+        grid.save()
+        print grid
+        crossword = CsCrossword(gridid=grid.id, dateadded=date.today(), user='bar')
+        crossword.save()
+        print crossword
+        for c in clues:
+            clue = CsClues(crosswordid=crossword.id, clue=c['clue'], answer=c['answer'], square=c['square'], code=c['code'])
+            print clue
+            clue.save()
         response = simplejson.dumps({'success':'False', 'html':'<span> abc </span>'})
         return HttpResponse(response, mimetype="application/json")
     else:
