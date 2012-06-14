@@ -20,7 +20,6 @@ font-weight:bold;
 font-family:tahoma,verdana,arial,sans-serif;
 color:#333;
 text-shadow:1px 1px 0 #fff; 
-background:url(http://github.com/images/modules/buttons/minibutton_matrix.png) 0 0 no-repeat;
 white-space:nowrap;
 border:none;
 overflow:visible;
@@ -33,7 +32,6 @@ display:block;
 height:23px;
 padding:0 10px 0 8px;
 line-height:23px;
-background:url(http://github.com/images/modules/buttons/minibutton_matrix.png) 100% 0 no-repeat;
 }
 
 a.minibutton:hover, a.minibutton:focus {
@@ -57,13 +55,23 @@ background:url(http://github.com/images/modules/buttons/minibutton_icons.png?v20
 }
 a.btn-download .icon {background-position:-40px 0;}
 a.btn-download:hover .icon, a.btn-download:focus .icon {background-position:-40px -25px;}
-
+#across, #down {
+margin: 20px;
+}
 </style>
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
     $("#write_clues").click(function() {
         CW.removeNumbers(); CW.numberCrossword();
+        writeclueAnswerBoxes();
+        $("#paste_clues").hide();
+    });
+    $("#paste_clues").click(function() {
+        CW.removeNumbers();
+        CW.numberCrossword();
+        writeAcrossDownBoxes();
+        $("#write_clues").hide();
     });
     jQuery('a.minibutton').mousedown(function() {
       jQuery(this).addClass('mousedown');
@@ -97,7 +105,7 @@ $(document).ready(function(){
 </script>
 <!-- button 1:"plain" -->
 <a href="javascript:;" class="minibutton"><span id="write_clues">Write Clues</span></a>
-<!-- <div id="write_clues">Write clues</div> -->
+<a href="javascript:;" class="minibutton"><span id="paste_clues">Paste Clues</span></a>
 <form id="paperEntry" action="/create/" method="POST" name="PaperEntry">
 <div id="CABoxes"></div>
 </form>

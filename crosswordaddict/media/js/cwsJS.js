@@ -314,6 +314,47 @@ function preset( inputGrid ){
   }
 }
 
+
+/**
+ * Writes an across and down textarea on the page. For copy-pasting clues.
+ */
+function writeAcrossDownBoxes(){
+  if( document.getElementById( "CABoxes" ) ){
+    var container = document.getElementById( "CABoxes" );
+    if( CW.across.length > 0 ){
+      for( var i = 0; i < CW.across.length; i++ ){
+        var clueNum = CW.across[i][0];
+        var answerLen = CW.across[i][1];
+	var squareNum = CW.across[i][2];
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A#', "type='HIDDEN'", "name='" + clueNum + "_A#'", "className='numberInput'", "value='" + clueNum + "'" ) );
+   
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_', "type='HIDDEN'", "name='" + clueNum + "_A_'", "value='" + answerLen + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_A_N', "type='HIDDEN'", "name='" + clueNum + "_A_N'", "value='" + squareNum + "'" ) );
+      }
+    }
+    if( CW.down.length > 0 ){
+      for( var i = 0; i < CW.down.length; i++ ){
+        var clueNum = CW.down[i][0];
+        var answerLen = CW.down[i][1];
+	var squareNum = CW.down[i][2];
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D#', "type='HIDDEN'", "name='" + clueNum + "_D#'", "className='numberInput'", "value='" + clueNum + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_', "type='HIDDEN'", "name='" + clueNum + "_D_'", "value='" + answerLen + "'" ) );
+        container.appendChild( domCreateElement( 'INPUT', clueNum + '_D_N', "type='HIDDEN'", "name='" + clueNum + "_D_N'", "value='" + squareNum + "'" ) );
+      }
+    }
+  }
+  $("#CABoxes").append('<input id="grid" name="grid" type="hidden"/>');
+  $("#CABoxes").append('<div class="title">Across</div>');
+  $("#CABoxes").append('<textarea id="across" name="across" rows="30" cols="60"/>');
+  $("#CABoxes").append('<div class="title">Down</div>');
+  $("#CABoxes").append('<textarea id="down" name="down" rows="30" cols="60"/>');
+  $("#CABoxes").append('<a href="javascript:;" class="minibutton"><span id="clue_submit">Done!</span></a>');
+  $("#clue_submit").click(function() {
+    $('#paperEntry').submit();
+  });
+  // CW.numberCrosswordFix();
+}
+
 /**
  * Writes a series of textboxes to the Document, allowing the user to enter the required clues for the selected grid.
  * This function is called using the window.timeout() function.
@@ -325,7 +366,6 @@ function writeclueAnswerBoxes(){
     var container = document.getElementById( "CABoxes" );
     if( CW.across.length > 0 ){
       container.appendChild( document.createElement( 'BR' ) );
-      container.appendChild( domCreateElement( 'IMG', 'AcrossImg', "src='img/Across.gif'" ) );
       container.appendChild( document.createElement( 'BR' ) );
       for( var i = 0; i < CW.across.length; i++ ){
         var clueNum = CW.across[i][0];
@@ -343,7 +383,6 @@ function writeclueAnswerBoxes(){
     }
     if( CW.down.length > 0 ){
       container.appendChild( document.createElement( 'BR' ) );
-      container.appendChild( domCreateElement( 'IMG', 'DownImg', "src='img/Down.gif'" ) );
       container.appendChild( document.createElement( 'BR' ) );
       for( var i = 0; i < CW.down.length; i++ ){
         var clueNum = CW.down[i][0];
@@ -451,8 +490,7 @@ function numberCrossword(){
         }
       }
     }
-    writeclueAnswerBoxes();
-    //winTO = window.setTimeout( writeclueAnswerBoxes2, clueInputDelay * 1000 );
+    //writeclueAnswerBoxes();
   }
 }
 
