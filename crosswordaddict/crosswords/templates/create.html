@@ -83,7 +83,9 @@ $(document).ready(function(){
       jQuery(this).removeClass('mousedown');
   });
   $('#paperEntry').submit(function(e) {
-      var validate = checkPaper();
+      // must integrate with django forms, not needed for paste clues.
+      // var validate = checkPaper();
+      checkCrossword();
       e.preventDefault();
       var paper_entry = jQuery(e.target);
       jQuery.ajax({

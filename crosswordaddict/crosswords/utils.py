@@ -24,14 +24,14 @@ class InconsistentClueException(Exception):
         self.parsed_clue_length = parsed_clue_length
         self.submitted_clue_length = submitted_clue_length
     def __str__(self):
-        return repr('submitted clue length %d not matching parsed clue length %d for clue %s' % (submitted_clue_length, parsed_clue_length, clue))
+        return repr('submitted clue length %s not matching parsed clue length %s for clue %s' % (self.submitted_clue_length, self.parsed_clue_length, self.clue))
 
 
 def get_length(l): return eval(punctuations.sub("+",l))
 
 
 def sanitize(l):
-    l = l.replace('’','\'').replace('—','--')
+    l = l.replace(u'’','\'').replace(u'—','--').replace(u'…','...')
     return l
 
 def get_clues(xword,type):
@@ -49,10 +49,10 @@ def get_clues(xword,type):
                 parsed = {}
                 clue_number = m.group('number')
                 square_key = '%s_%s_N' % (clue_number,type)
-                clue_length_key = '%s_%s_' % (clue_number)
-                if not xword[square_key]:
+                clue_length_key = '%s_%s_' % (clue_number, type)
+                if square_key not in xword:
                     raise GridValidationException(square_key)
-                if not xword[clue_length_key]:
+                if clue_length_key not in xword:
                     raise GridValidationException(clue_length_key)
                 parsed['code'] = clue_number
                 parsed['clue'] = m.group('clue')

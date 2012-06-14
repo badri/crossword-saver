@@ -7,6 +7,8 @@ from django.core import serializers
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils import simplejson
 
+from utils import get_clues
+
 def index(request):
     if request.GET:
         if 'grid_id' in request.GET:
