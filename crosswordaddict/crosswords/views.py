@@ -106,21 +106,16 @@ def create(request):
                     print '%s %s,%s' % (clue_num, clue_text, grid_number)
                     clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'D'})
                 
-        print xword['grid']
-        print clues
-        '''
+        #print xword['grid']
+        #print clues
         grid = CsPresets(grid=xword['grid'], name='test', description='a test crossword')
         grid.save()
-
         crossword = CsCrossword(gridid=grid.id, dateadded=date.today(), user='bar')
         crossword.save()
-
-
         for c in clues:
             clue = CsClues(crosswordid=crossword.id, clue=c['clue'], answer=c['answer'], square=c['square'], code=c['code'])
             print clue
             clue.save()
-        '''
         response = simplejson.dumps({'success':'False', 'html':'<span> abc </span>'})
         return HttpResponse(response, mimetype="application/json")
     else:
