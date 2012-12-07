@@ -1,5 +1,10 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
+'''
+TODO:
+better regex for multiline clues.
+ignore and strip put unicode characters.
+'''
 import re
 
 clue=re.compile('(?P<number>[0-9]+)[\\.\s]*(?P<clue>[0-9A-Za-z,:;\'"\\.\\?!\\-\\(\\) ]+)\((?P<length>[0-9,-]+)\)')

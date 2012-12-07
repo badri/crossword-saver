@@ -54,7 +54,7 @@ class CsPresets(models.Model):
         return "%s"%(self.grid)    
 
     def get_absolute_url(self):
-        return '/?grid_id=%d' % self.id
+        return reverse('crossword.views.crossword', args=(str(self.id),))
 
     class Meta:
         db_table = u'cs_presets'
