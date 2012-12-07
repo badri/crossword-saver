@@ -1,115 +1,115 @@
 <html>
-<head>
-<link rel="stylesheet" href="/site_media/css/style.css" type="text/css">
-<script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
-<script type="text/javascript" src="/site_media/js/cwsJS.js"></script>
-</head>
-<body>
-<script type="text/javascript">
-drawCrossword( 15, 15 );
-</script>
+  <head>
+    <link rel="stylesheet" href="/site_media/css/style.css" type="text/css">
+    <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="/site_media/js/cwsJS.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      drawCrossword( 15, 15 );
+    </script>
 
-<style type="text/css">
-/* button basics */
-a.minibutton {
-display:inline-block;
-height:23px;
-padding:0 0 0 3px;
-font-size:11px;
-font-weight:bold;
-font-family:tahoma,verdana,arial,sans-serif;
-color:#333;
-text-shadow:1px 1px 0 #fff; 
-white-space:nowrap;
-border:none;
-overflow:visible;
-cursor:pointer;
-text-decoration:none;
-}
+    <style type="text/css">
+      /* button basics */
+      a.minibutton {
+      display:inline-block;
+      height:23px;
+      padding:0 0 0 3px;
+      font-size:11px;
+      font-weight:bold;
+      font-family:tahoma,verdana,arial,sans-serif;
+      color:#333;
+      text-shadow:1px 1px 0 #fff; 
+      white-space:nowrap;
+      border:none;
+      overflow:visible;
+      cursor:pointer;
+      text-decoration:none;
+      }
 
-a.minibutton>span {
-display:block;
-height:23px;
-padding:0 10px 0 8px;
-line-height:23px;
-}
+      a.minibutton>span {
+      display:block;
+      height:23px;
+      padding:0 10px 0 8px;
+      line-height:23px;
+      }
 
-a.minibutton:hover, a.minibutton:focus {
-color:#fff;
-text-decoration:none;
-text-shadow:-1px -1px 0 rgba(0,0,0,0.3);
-background-position:0 -30px;
-}
-a.minibutton:hover>span, a.minibutton:focus>span {background-position:100% -30px;}
+      a.minibutton:hover, a.minibutton:focus {
+      color:#fff;
+      text-decoration:none;
+      text-shadow:-1px -1px 0 rgba(0,0,0,0.3);
+      background-position:0 -30px;
+      }
+      a.minibutton:hover>span, a.minibutton:focus>span {background-position:100% -30px;}
 
-a.minibutton.mousedown{background-position:0 -60px; }
-a.minibutton.mousedown>span{background-position:100% -60px; }
+      a.minibutton.mousedown{background-position:0 -60px; }
+      a.minibutton.mousedown>span{background-position:100% -60px; }
 
-/* with icon */
-a.btn-download .icon {
-float:left;
-margin-left:-4px;
-width:18px;
-height:22px;
-background:url(http://github.com/images/modules/buttons/minibutton_icons.png?v20100306) 0 0 no-repeat;
-}
-a.btn-download .icon {background-position:-40px 0;}
-a.btn-download:hover .icon, a.btn-download:focus .icon {background-position:-40px -25px;}
-#across, #down {
-margin: 20px;
-}
-</style>
+      /* with icon */
+      a.btn-download .icon {
+      float:left;
+      margin-left:-4px;
+      width:18px;
+      height:22px;
+      background:url(http://github.com/images/modules/buttons/minibutton_icons.png?v20100306) 0 0 no-repeat;
+      }
+      a.btn-download .icon {background-position:-40px 0;}
+      a.btn-download:hover .icon, a.btn-download:focus .icon {background-position:-40px -25px;}
+      #across, #down {
+      margin: 20px;
+      }
+    </style>
 
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function(){
-    $("#write_clues").click(function() {
-        CW.removeNumbers(); CW.numberCrossword();
-        writeclueAnswerBoxes();
-        $("#paste_clues").hide();
-    });
-    $("#paste_clues").click(function() {
-        CW.removeNumbers();
-        CW.numberCrossword();
-        writeAcrossDownBoxes();
-        $("#write_clues").hide();
-    });
-    jQuery('a.minibutton').mousedown(function() {
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function(){
+      $("#write_clues").click(function() {
+      CW.removeNumbers(); CW.numberCrossword();
+      writeclueAnswerBoxes();
+      $("#paste_clues").hide();
+      });
+      $("#paste_clues").click(function() {
+      CW.removeNumbers();
+      CW.numberCrossword();
+      writeAcrossDownBoxes();
+      $("#write_clues").hide();
+      });
+      jQuery('a.minibutton').mousedown(function() {
       jQuery(this).addClass('mousedown');
-    });
-    jQuery('a.minibutton').blur(function() {
+      });
+      jQuery('a.minibutton').blur(function() {
       jQuery(this).removeClass('mousedown');
-    });
-    jQuery('a.minibutton').mouseup(function() {
+      });
+      jQuery('a.minibutton').mouseup(function() {
       jQuery(this).removeClass('mousedown');
-  });
-  $('#paperEntry').submit(function(e) {
+      });
+      $('#paperEntry').submit(function(e) {
       // must integrate with django forms, not needed for paste clues.
       // var validate = checkPaper();
       checkCrossword();
       e.preventDefault();
       var paper_entry = jQuery(e.target);
       jQuery.ajax({
-        url: paper_entry.attr('action'),
-        type: paper_entry.attr('method'),
-        data: paper_entry.serialize(),
-        dataType: 'json',
-        success: function(json){
-          alert(json);
-        },
-        error: function(xhr, ajaxOptions, thrownError){
-        // log ajax errors?
-        }
+      url: paper_entry.attr('action'),
+      type: paper_entry.attr('method'),
+      data: paper_entry.serialize(),
+      dataType: 'json',
+      success: function(json){
+      alert(json);
+      },
+      error: function(xhr, ajaxOptions, thrownError){
+      // log ajax errors?
+      }
       });
-  });
-});
-
-
-</script>
-<!-- button 1:"plain" -->
-<a href="javascript:;" class="minibutton"><span id="write_clues">Write Clues</span></a>
-<a href="javascript:;" class="minibutton"><span id="paste_clues">Paste Clues</span></a>
-<form id="paperEntry" action="/create/" method="POST" name="PaperEntry">
-<div id="CABoxes"></div>
-</form>
-</body>
+      });
+      });
+    </script>
+    <!-- button 1:"plain" -->
+    <a href="javascript:;" class="minibutton"><span id="write_clues">Write Clues</span></a>
+    <a href="javascript:;" class="minibutton"><span id="paste_clues">Paste Clues</span></a>
+    <form id="paperEntry" action="/create/" method="POST" name="PaperEntry">
+      <div>name</div><input id="name" type="text" name="name"/>
+      <div>description</div><input id="description" type="text" name="description"/>
+      <div id="CABoxes"></div>
+    </form>
+  </body>
 </html>

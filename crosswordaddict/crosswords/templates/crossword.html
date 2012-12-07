@@ -1,287 +1,287 @@
 <html>
-<head>
-<!--<link href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah|Coming+Soon|Delius|Rock+Salt|Architects+Daughter|Permanent+Marker|Indie+Flower|Schoolbell|Neucha' rel='stylesheet' type='text/css'>-->
-<!--
-some google fonts for use
-font-family: 'Gloria Hallelujah', cursive;
-font-family: 'Coming Soon', cursive;
-font-family: 'Delius', cursive;
-font-family: 'Rock Salt', cursive;
-font-family: 'Architects Daughter', cursive;
-font-family: 'Permanent Marker', cursive;
-font-family: 'Indie Flower', cursive;
-font-family: 'Schoolbell', cursive;
-font-family: 'Neucha', cursive;
--->
-<script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
-<script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.8.js"></script>
-<script type="text/javascript" src="/site_media/js/cufon-yui.js"></script>
-<script type="text/javascript" src="/site_media/js/ballpoint_400.font.lh.js"></script>
-<script type="text/javascript">
-   Cufon.replace('.letter');
-</script>
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function(){
-    // defaults
-    var align = "across";
-    var in_focus = "0";
+  <head>
+    <!--<link href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah|Coming+Soon|Delius|Rock+Salt|Architects+Daughter|Permanent+Marker|Indie+Flower|Schoolbell|Neucha' rel='stylesheet' type='text/css'>-->
+    <!--
+	some google fonts for use
+	font-family: 'Gloria Hallelujah', cursive;
+	font-family: 'Coming Soon', cursive;
+	font-family: 'Delius', cursive;
+	font-family: 'Rock Salt', cursive;
+	font-family: 'Architects Daughter', cursive;
+	font-family: 'Permanent Marker', cursive;
+	font-family: 'Indie Flower', cursive;
+	font-family: 'Schoolbell', cursive;
+	font-family: 'Neucha', cursive;
+      -->
+    <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.8.js"></script>
+    <script type="text/javascript" src="/site_media/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="/site_media/js/ballpoint_400.font.lh.js"></script>
+    <script type="text/javascript">
+      Cufon.replace('.letter');
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function(){
+      // defaults
+      var align = "across";
+      var in_focus = "0";
 
-   $(".clue").mouseover(function(e) {
-           $(this).css("color", "red");
-   }).mouseout(function(e) {
+      $(".clue").mouseover(function(e) {
+      $(this).css("color", "red");
+      }).mouseout(function(e) {
       $(this).css("color", "black");
-   });
+      });
 
-   $(".across_clues > .clue").click(function(e) {
-        align = "across";
-        $("#box_"+in_focus).css("background-color", "white");
-        in_focus = this.id.slice(0, this.id.length-1);
-        $("#box_"+in_focus).css("background-color", "#99cc00");
-   });
+      $(".across_clues > .clue").click(function(e) {
+      align = "across";
+      $("#box_"+in_focus).css("background-color", "white");
+      in_focus = this.id.slice(0, this.id.length-1);
+      $("#box_"+in_focus).css("background-color", "#99cc00");
+      });
 
-   $(".down_clues > .clue").click(function(e) {
-        align = "down";
-        $("#box_"+in_focus).css("background-color", "white");
-        in_focus = this.id.slice(0, this.id.length-1);
-        $("#box_"+in_focus).css("background-color", "#99cc00");
-   });
+      $(".down_clues > .clue").click(function(e) {
+      align = "down";
+      $("#box_"+in_focus).css("background-color", "white");
+      in_focus = this.id.slice(0, this.id.length-1);
+      $("#box_"+in_focus).css("background-color", "#99cc00");
+      });
 
-  function find_next_square() {
-     if(align == "across") {
-         var next_square = parseInt(in_focus) + 1;
-     }
-     else {
-         var next_square = parseInt(in_focus) + 15;
-     }
-     return next_square;
-  }
+      function find_next_square() {
+      if(align == "across") {
+      var next_square = parseInt(in_focus) + 1;
+      }
+      else {
+      var next_square = parseInt(in_focus) + 15;
+      }
+      return next_square;
+      }
 
-  function find_prev_square() {
-     if(align == "across") {
-         var prev_square = parseInt(in_focus) - 1;
-     }
-     else {
-         var prev_square = parseInt(in_focus) - 15;
-     }
-     return prev_square;
-  }
+      function find_prev_square() {
+      if(align == "across") {
+      var prev_square = parseInt(in_focus) - 1;
+      }
+      else {
+      var prev_square = parseInt(in_focus) - 15;
+      }
+      return prev_square;
+      }
 
-  function is_across(current_box) {
-    if((current_box % 15 == 0) || (current_box % 15 == 1)) {
-        current_box= parseInt(current_box)+15;
-        return ($("#box_"+current_box).attr("class").indexOf("black-box") != -1);
-    }
-    var next_square = parseInt(current_box) + 1;
-    var prev_square = parseInt(current_box) - 1;
-    if(next_square > 255) {
-        return true;
-    }
-    return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) || 
-    ($("#box_"+prev_square).attr("class").indexOf("black-box") == -1) );
-    }
+      function is_across(current_box) {
+      if((current_box % 15 == 0) || (current_box % 15 == 1)) {
+      current_box= parseInt(current_box)+15;
+      return ($("#box_"+current_box).attr("class").indexOf("black-box") != -1);
+      }
+      var next_square = parseInt(current_box) + 1;
+      var prev_square = parseInt(current_box) - 1;
+      if(next_square > 255) {
+      return true;
+      }
+      return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) || 
+      ($("#box_"+prev_square).attr("class").indexOf("black-box") == -1) );
+      }
 
-   $(".tile").click(function(e) {
-        var current_box = this.id.split("_")[1];
-        if(is_across(current_box)) {
-           align = "across";
-        }
-        else {
-            align = "down";
-        }
-        $("#box_"+in_focus).css("background-color", "white");
-        in_focus = this.id.split("_")[1];
-        $("#box_"+in_focus).css("background-color", "#99cc00");
-   });
+      $(".tile").click(function(e) {
+      var current_box = this.id.split("_")[1];
+      if(is_across(current_box)) {
+      align = "across";
+      }
+      else {
+      align = "down";
+      }
+      $("#box_"+in_focus).css("background-color", "white");
+      in_focus = this.id.split("_")[1];
+      $("#box_"+in_focus).css("background-color", "#99cc00");
+      });
 
-  var bkspc = function(s){
-              $("#box_"+in_focus).css("background-color", "white");
-              in_focus = find_prev_square(); 
-              $("#box_"+in_focus + "> .letter").text("");
-              $("#box_"+in_focus + "> input").val("");
-              $("#box_"+in_focus).css("background-color", "#99cc00");
-             }
+      var bkspc = function(s){
+      $("#box_"+in_focus).css("background-color", "white");
+      in_focus = find_prev_square(); 
+      $("#box_"+in_focus + "> .letter").text("");
+      $("#box_"+in_focus + "> input").val("");
+      $("#box_"+in_focus).css("background-color", "#99cc00");
+      }
 
-  $(document).bind('keydown', 'backspace', bkspc);
-
-
-  var key_map = function(s){
-                     $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
-                     $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
-                     $("#box_"+in_focus).css("background-color", "white");
-                     var next_square = find_next_square();
-                     if(next_square > 225) { Cufon.replace('.letter'); return false; }
-                     if($("#box_"+next_square).attr("class").indexOf("black-box") != -1) { Cufon.replace('.letter'); return false; }
-                     in_focus = next_square;
-                     $("#box_"+in_focus).css("background-color", "#99cc00");
-                     Cufon.replace('.letter');
-                    }
-
-  var alphabets = 'abcdefghijklmnopqrstuvwxyz';
-  for(var i=0; i <= alphabets.length; i++) {
-      $(document).bind('keydown', alphabets[i], key_map);
-  }
+      $(document).bind('keydown', 'backspace', bkspc);
 
 
- });
+      var key_map = function(s){
+      $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
+      $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
+      $("#box_"+in_focus).css("background-color", "white");
+      var next_square = find_next_square();
+      if(next_square > 225) { Cufon.replace('.letter'); return false; }
+      if($("#box_"+next_square).attr("class").indexOf("black-box") != -1) { Cufon.replace('.letter'); return false; }
+      in_focus = next_square;
+      $("#box_"+in_focus).css("background-color", "#99cc00");
+      Cufon.replace('.letter');
+      }
 
-</script> 
-<style type="text/css">
-@font-face {
-    font-family:"ballpoint";
-    src:url("/site_media/fonts/fg-ballpoint.ttf");
-}
-.grid {
-    /*border-style:solid;
-    border-color:black;
-    border-width:1px;*/
-    margin-bottom: 20px;
-}
+      var alphabets = 'abcdefghijklmnopqrstuvwxyz';
+      for(var i=0; i <= alphabets.length; i++) {
+			$(document).bind('keydown', alphabets[i], key_map);
+			}
 
-.black-box1 {
-    color:#111111;
-    background-color:#111111;
-    margin:-3px;
-    width:31px; 
-    height:31px; 
-    font-family:ballpoint, serif; 
-    font-weight:bold; 
-    font-size:20px; 
-    text-align:center;
-    background-image:url('/site_media/img/sq1.png');
-    border-width:1px;
-}
 
-.black-box2 {
-    color:#111111;
-    background-color:#111111;
-    margin:-3px;
-    width:31px; 
-    height:31px; 
-    font-family:ballpoint, serif; 
-    font-weight:bold; 
-    font-size:20px; 
-    text-align:center;
-    background-image:url('/site_media/img/sq2.png');
-    border-width:1px;
-}
+			});
 
-.black-box3 {
-    color:#111111;
-    background-color:#111111;
-    margin:-3px;
-    width:31px; 
-    height:31px; 
-    font-family:ballpoint, serif; 
-    font-weight:bold; 
-    font-size:20px; 
-    text-align:center;
-    background-image:url('/site_media/img/sq3.png');
-    border-width:1px;
-}
+			</script> 
+    <style type="text/css">
+      @font-face {
+      font-family:"ballpoint";
+      src:url("/site_media/fonts/fg-ballpoint.ttf");
+      }
+      .grid {
+      /*border-style:solid;
+      border-color:black;
+      border-width:1px;*/
+      margin-bottom: 20px;
+      }
 
-.tile {
-    color:blue;
-    margin:-3px;
-    width:30px; 
-    height:30px; 
-    font-family:ballpoint, serif; 
-    font-weight:bold; 
-    font-size:20px; 
-    text-align:center;
-    border-width:1px;
-    border: 1px solid;
-    border-color: black;
-}
+      .black-box1 {
+      color:#111111;
+      background-color:#111111;
+      margin:-3px;
+      width:31px; 
+      height:31px; 
+      font-family:ballpoint, serif; 
+      font-weight:bold; 
+      font-size:20px; 
+      text-align:center;
+      background-image:url('/site_media/img/sq1.png');
+      border-width:1px;
+      }
 
-.across_clues {
-    float: right;
-    font-family:"Lucida Grande","Lucida Sans Unicode","Trebuchet MS",sans-serif;
-    width: 450px;
-    border-right: 1px dashed gray;
-}
+      .black-box2 {
+      color:#111111;
+      background-color:#111111;
+      margin:-3px;
+      width:31px; 
+      height:31px; 
+      font-family:ballpoint, serif; 
+      font-weight:bold; 
+      font-size:20px; 
+      text-align:center;
+      background-image:url('/site_media/img/sq2.png');
+      border-width:1px;
+      }
 
-.down_clues {
-    float: right;
-    font-family:"Lucida Grande","Lucida Sans Unicode","Trebuchet MS",sans-serif;
-    width: 400px;
-}
+      .black-box3 {
+      color:#111111;
+      background-color:#111111;
+      margin:-3px;
+      width:31px; 
+      height:31px; 
+      font-family:ballpoint, serif; 
+      font-weight:bold; 
+      font-size:20px; 
+      text-align:center;
+      background-image:url('/site_media/img/sq3.png');
+      border-width:1px;
+      }
 
-.clue {
-    padding:2px;
-    color: black;
-}
+      .tile {
+      color:blue;
+      margin:-3px;
+      width:30px; 
+      height:30px; 
+      font-family:ballpoint, serif; 
+      font-weight:bold; 
+      font-size:20px; 
+      text-align:center;
+      border-width:1px;
+      border: 1px solid;
+      border-color: black;
+      }
 
-.letter {
-    margin-top:-10px;
-    font-family:ballpoint, sans-serif;
-    font-weight:normal;
-}
+      .across_clues {
+      float: right;
+      font-family:"Lucida Grande","Lucida Sans Unicode","Trebuchet MS",sans-serif;
+      width: 450px;
+      border-right: 1px dashed gray;
+      }
 
-.number {
-    padding-top:1px;
-    padding-left:1px;
-    font-size:12px;
-    color:black;
-    font-family:"Times New Roman";
-    font-weight:normal;
-}
+      .down_clues {
+      float: right;
+      font-family:"Lucida Grande","Lucida Sans Unicode","Trebuchet MS",sans-serif;
+      width: 400px;
+      }
 
-</style>
-<!--[if lt IE 7]>
-<script defer type="text/javascript" src="/site_media/js/pngfix.js"></script>
-<link rel="stylesheet" type="text/css" href="/site_media/css/ie.css" media="screen" />
-<![endif]-->
-</head>
-<body>
-<div class="down_clues">
-{% for down_clue in down %}
-<div id="{{ down_clue.square }}c" class="clue"> {{ down_clue.code }} {{ down_clue.clue }}</div>
-{% endfor %}
-</div>
+      .clue {
+      padding:2px;
+      color: black;
+      }
 
-<div class="across_clues">
-{% for across_clue in across %}
-<div id="{{ across_clue.square }}c" class="clue"> {{ across_clue.code }} {{ across_clue.clue }}</div>
-{% endfor %}
-</div>
-<form action="/save/" method="POST">
-<input type="hidden" id="grid_id" name="grid_id" value="{{ grid_id }}"/>
-<table class="grid">
-<tr>
-{% for i in crossword %}
-{% if forloop.counter0|divisibleby:"15" %}
-</tr>
-<tr>
-{% endif %}
-{% ifequal i.grid "0" %}
-<td>
-<div type="text" id="box_{{ forloop.counter }}" class="{% cycle 'black-box1' 'black-box2' 'black-box3'%}"/>
-<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
-</td>
-{% else %}
-{% if i.code %}
-<td>
-<div id="box_{{ forloop.counter }}" class="tile">
-<div align="left" class="number">{{ i.code }}</div>
-<div class="letter">{{ i.ans }}</div>
-<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile" value="{{ i.ans }}"/>
-</div>
-</td>
-{% else %}
-<td>
-<div id="box_{{ forloop.counter }}" class="tile">
-<div align="left" style="width:30px; height:15px;"></div>
-<div class="letter">{{ i.ans }}</div>
-<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" class="tile" value="{{ i.ans }}"/>
-</div>
-</td>
-{% endif %}
-{% endifequal %}
-{% endfor %}
-</tr>
-</table>
-<input type="submit" value="save" />
-</form>
-</body>
+      .letter {
+      margin-top:-10px;
+      font-family:ballpoint, sans-serif;
+      font-weight:normal;
+      }
+
+      .number {
+      padding-top:1px;
+      padding-left:1px;
+      font-size:12px;
+      color:black;
+      font-family:"Times New Roman";
+      font-weight:normal;
+      }
+
+    </style>
+    <!--[if lt IE 7]>
+	<script defer type="text/javascript" src="/site_media/js/pngfix.js"></script>
+	<link rel="stylesheet" type="text/css" href="/site_media/css/ie.css" media="screen" />
+	<![endif]-->
+  </head>
+  <body>
+    <div class="down_clues">
+      {% for down_clue in down %}
+      <div id="{{ down_clue.square }}c" class="clue"> {{ down_clue.code }} {{ down_clue.clue }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="across_clues">
+      {% for across_clue in across %}
+      <div id="{{ across_clue.square }}c" class="clue"> {{ across_clue.code }} {{ across_clue.clue }}</div>
+      {% endfor %}
+    </div>
+    <form action="/save/" method="POST">
+      <input type="hidden" id="grid_id" name="grid_id" value="{{ grid_id }}"/>
+      <table class="grid">
+	<tr>
+	  {% for i in crossword %}
+	  {% if forloop.counter0|divisibleby:"15" %}
+	</tr>
+	<tr>
+	  {% endif %}
+	  {% ifequal i.grid "0" %}
+	  <td>
+	    <div type="text" id="box_{{ forloop.counter }}" class="{% cycle 'black-box1' 'black-box2' 'black-box3'%}"/>
+	    <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
+	  </td>
+	  {% else %}
+	  {% if i.code %}
+	  <td>
+	    <div id="box_{{ forloop.counter }}" class="tile">
+	      <div align="left" class="number">{{ i.code }}</div>
+	      <div class="letter">{{ i.ans }}</div>
+	      <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1"  class="tile" value="{{ i.ans }}"/>
+	    </div>
+	  </td>
+	  {% else %}
+	  <td>
+	    <div id="box_{{ forloop.counter }}" class="tile">
+	      <div align="left" style="width:30px; height:15px;"></div>
+	      <div class="letter">{{ i.ans }}</div>
+	      <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" class="tile" value="{{ i.ans }}"/>
+	    </div>
+	  </td>
+	  {% endif %}
+	  {% endifequal %}
+	  {% endfor %}
+	</tr>
+      </table>
+      <input type="submit" value="save" id="save_crossword"/>
+    </form>
+  </body>
 </html>
 

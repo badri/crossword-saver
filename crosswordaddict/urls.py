@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', index, name='home'),
-    (r'^crossword/(?P<id>\d+)$', crossword),
+    url(r'^crossword/(?P<id>\d+)$', crossword, name="crossword"),
     (r'^save/$', crossword_save),
     (r'^all/$', list_crosswords),
     url(r'^/(?P<newspaper>\w+)/(?P<name>\w+)$', crossword_detail,name="crossword_detail"), # Ex: thc-9936, gc-24766

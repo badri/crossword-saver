@@ -107,7 +107,7 @@ def create(request):
         #print xword['grid']
         #print clues
         # do some kind of error checking down here.
-        grid = CsPresets(grid=xword['grid'], name='test', description='a test crossword')
+        grid = CsPresets(grid=xword['grid'], name=xword['name'], description=xword['description'])
         grid.save()
         crossword = CsCrossword(gridid=grid.id, dateadded=date.today(), user='bar')
         crossword.save()

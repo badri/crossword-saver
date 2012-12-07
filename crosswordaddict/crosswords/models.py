@@ -14,9 +14,10 @@ from fields import CrosswordField
 class CsClues(models.Model):
     crosswordid = models.IntegerField(null=True, db_column='crosswordId', blank=True) # Field name made lowercase.
     clue = models.CharField(max_length=300, blank=True)
-    answer = models.CharField(max_length=90, blank=True)
+    answer = models.CharField(max_length=90, blank=True) # user specific
     code = models.CharField(max_length=30, blank=True)
     square = models.IntegerField(null=True, blank=True)
+    notes = models.TextField(blank=True) # user specific
     def __unicode__(self):
         return "%s"%(self.clue)
     class Meta:
@@ -41,20 +42,16 @@ class CsCrossword(models.Model):
 class CsPresets(models.Model):
     grid = models.TextField()
     answers = models.TextField(blank=True)
-    CROSSWORD_CHOICES = (
-        ('thc', 'The Hindu Crossword'),
-        ('gdn', 'The Guardian Cryptic'),
-        ('oth','Other'),
-        )
-    source = models.CharField(blank=True, max_length=3, choices=CROSSWORD_CHOICES)
-    name = models.CharField(max_length=10, blank=True)
-    description = models.CharField(max_length=150, blank=True)
+    name = models.CharField(max_length=20, blank=True)
+    description = models.TextField(blank=True)
+    added = models.DateTimeField(auto_now_add=True)
+    appeared = models.DateField(blank=True)
 
     def __unicode__(self):
         return "%s"%(self.grid)    
 
     def get_absolute_url(self):
-        return reverse('crossword.views.crossword', args=(str(self.id),))
+        return reverse('crossword', args=(self.pk,))
 
     class Meta:
         db_table = u'cs_presets'
