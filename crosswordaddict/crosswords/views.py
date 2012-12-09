@@ -7,8 +7,12 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils import simplejson
+from django.contrib.auth.models import User
 
 from utils import get_clues
+from forms import CrosswordForm
+from favorites.models import Favorite
+
 
 def index(request):
     return render_to_response('index.html')
@@ -17,12 +21,13 @@ def crossword(request, id):
     cspreset = get_object_or_404(CsPresets, pk=id)
     grid = cspreset.grid
     answers = cspreset.answers
-    crossword_id = CsCrossword.objects.filter(gridid=id).values_list('id')
-    cs_clues = CsClues.objects.filter(crosswordid=crossword_id).values_list('square', 'code', 'clue')
+    crossword_id = CsCrossword.objects.get(gridid=id).id
+    cs_clues = CsClues.objects.filter(crosswordid=crossword_id)
     #print cs_clues
-    number_info = dict([(int(x[0]), {"code":x[1][:-1]}) for x in cs_clues])
-    across = [({"square":int(x[0]), "code":x[1][:-1], "clue":x[2]}) for x in cs_clues if x[1][-1]=='A']
-    down = [({"square":int(x[0]), "code":x[1][:-1], "clue":x[2]}) for x in cs_clues if x[1][-1]=='D']           
+    u = User.objects.get(username='badri')
+    number_info = dict([(int(x.square), {"code":x.code[:-1]}) for x in cs_clues])
+    across = [({"square":int(x.square), "code":x.code[:-1], "clue":x.clue, "note":x.notes, "favorite": Favorite.objects.favorites_for_object(x,u).exists() }) for x in cs_clues if x.code[-1]=='A']
+    down = [({"square":int(x.square), "code":x.code[:-1], "clue":x.clue, "note":x.notes, "favorite": Favorite.objects.favorites_for_object(x,u).exists()}) for x in cs_clues if x.code[-1]=='D']
     #print across
     #print down
     #print answers
@@ -37,7 +42,7 @@ def crossword(request, id):
         else:
             crossword.append({'grid':j, 'code': '', 'ans': ans})
     #print crossword
-    return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id})
+    return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared})
 
 
 def list_crosswords(request):
@@ -105,9 +110,9 @@ def create(request):
                     clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'D'})
                 
         #print xword['grid']
-        #print clues
+        print clues
         # do some kind of error checking down here.
-        grid = CsPresets(grid=xword['grid'], name=xword['name'], description=xword['description'])
+        grid = CsPresets(grid=xword['grid'], name=xword['name'], description=xword['description'], appeared=xword['appeared'])
         grid.save()
         crossword = CsCrossword(gridid=grid.id, dateadded=date.today(), user='bar')
         crossword.save()
@@ -118,5 +123,26 @@ def create(request):
         response = simplejson.dumps({'success':'False', 'html':'<span> abc </span>'})
         return HttpResponse(response, mimetype="application/json")
     else:
-        return render_to_response('create.html')
+        xwd_form = CrosswordForm()
+        return render_to_response('create.html', {'xword': xwd_form})
 
+def crossword_add_note(request):
+    if request.is_ajax():
+        resp = request.POST
+        clue = CsClues.objects.get(crosswordid=resp['crossword'], square=resp['clue'][:-1])
+        print clue
+        clue.notes = resp['note']
+        clue.save()
+        response = {'clue' : resp['clue'], 'note': resp['note']}
+        data = simplejson.dumps(response)
+        return HttpResponse(data, mimetype='application/json')
+
+def clue_add_favorite(request):
+    if request.is_ajax():
+        resp = request.POST
+        clue = CsClues.objects.get(crosswordid=resp['crossword'], square=resp['clue'][:-1])
+        user = User.objects.get(username='badri')
+        Favorite.objects.create_favorite(clue, user)
+        response = {'clue' : resp['clue']}
+        data = simplejson.dumps(response)
+        return HttpResponse(data, mimetype='application/json')

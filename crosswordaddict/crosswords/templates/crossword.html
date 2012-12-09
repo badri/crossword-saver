@@ -13,30 +13,97 @@
 	font-family: 'Schoolbell', cursive;
 	font-family: 'Neucha', cursive;
       -->
+    <title>{{ name }} | xwords</title>
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
     <script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.8.js"></script>
     <script type="text/javascript" src="/site_media/js/cufon-yui.js"></script>
     <script type="text/javascript" src="/site_media/js/ballpoint_400.font.lh.js"></script>
+    <link rel="stylesheet" href="/site_media/css/master.css" />
+    <noscript>
+      <link rel="stylesheet" href="/site_media/css/mobile.min.css" />
+    </noscript>
+    <script>
+      // Edit to suit your needs.
+      var ADAPT_CONFIG = {
+      // Where is your CSS?
+      path: '/site_media/css/',
+
+      // false = Only run once, when page first loads.
+      // true = Change on window resize and page tilt.
+      dynamic: true,
+
+      // First range entry is the minimum.
+      // Last range entry is the maximum.
+      // Separate ranges by "to" keyword.
+      range: [
+      '0px    to 760px  = mobile.min.css',
+      '760px  to 980px  = 720.min.css',
+      '980px  to 1280px = 960.min.css',
+      '1280px to 1600px = 1200.min.css',
+      '1600px to 1940px = 1560.min.css',
+      '1940px to 2540px = 1920.min.css',
+      '2540px           = 2520.min.css'
+      ]
+      };
+    </script>
+    <script src="/site_media/js/adapt.min.js"></script>
     <script type="text/javascript">
       Cufon.replace('.letter');
     </script>
     <script type="text/javascript" charset="utf-8">
+      function trim(s){ 
+        return ( s || '' ).replace( /^\s+|\s+$/g, '' ); 
+      }
       $(document).ready(function(){
       // defaults
       var align = "across";
       var in_focus = "0";
+      var f = function(e) {
+			  $('#notes-form').show();
+			  $('#clue-id').attr('value', e.attr('id'));
+                          $('#clue-notes').val(trim(e.next().text()));
+			};
 
-      $(".clue").mouseover(function(e) {
-      $(this).css("color", "red");
-      }).mouseout(function(e) {
-      $(this).css("color", "black");
-      });
+     $('#write-note').click(function() {
+       $.ajax({
+         type: "POST",
+         dataType: "json",
+         url: "/add-note/",
+         data: { "clue": $('#clue-id').val(), "note": $('#clue-notes').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
+         error: handleFail,
+         success : done2
+       });
+     });
+
+     $('#add-favorite').click(function() {
+       $.ajax({
+         type: "POST",
+         dataType: "json",
+         url: "/add-favorite/",
+         data: { "clue": $('#clue-id').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
+         error: handleFail,
+         success : done
+       });
+     });
+      
+    $('#clue-notes').focus(function() {in_focus = "x";});
+    var handleFail = function(xhr, msg) {alert(msg);}
+    var done2 = function(data) { $('#'+data.clue).next().text(data.note); }
+    var done = function(data) { $('#'+data.clue).addClass('favorite'); }
 
       $(".across_clues > .clue").click(function(e) {
       align = "across";
       $("#box_"+in_focus).css("background-color", "white");
       in_focus = this.id.slice(0, this.id.length-1);
       $("#box_"+in_focus).css("background-color", "#99cc00");
+      f($(this));
+      if($(this).hasClass('favorite')) {
+        $('#add-favorite').hide();
+      }
+      else {
+        $('#add-favorite').show();
+      }
       });
 
       $(".down_clues > .clue").click(function(e) {
@@ -44,6 +111,13 @@
       $("#box_"+in_focus).css("background-color", "white");
       in_focus = this.id.slice(0, this.id.length-1);
       $("#box_"+in_focus).css("background-color", "#99cc00");
+      f($(this));
+      if($(this).hasClass('favorite')) {
+        $('#add-favorite').hide();
+      }
+      else {
+        $('#add-favorite').show();
+      }
       });
 
       function find_next_square() {
@@ -121,23 +195,86 @@
 			$(document).bind('keydown', alphabets[i], key_map);
 			}
 
-
 			});
 
 			</script> 
     <style type="text/css">
+      table.grid {
+        border-spacing: 1px;
+        border-collapse: separate;
+      }
+      table.grid td {
+        padding: 2px;
+      }
       @font-face {
       font-family:"ballpoint";
       src:url("/site_media/fonts/fg-ballpoint.ttf");
       }
+      .notes { display: none; }
       .grid {
-      /*border-style:solid;
-      border-color:black;
-      border-width:1px;*/
       margin-bottom: 20px;
       }
 
-      .black-box1 {
+#add-favorite,
+#write-note {
+  margin-top: 20px;
+}
+
+
+#add-favorite,
+#write-note,
+#save_crossword {
+  background-color: #a5b8da;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+  background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+  background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+  background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+  background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+  background-image: linear-gradient(top, #a5b8da, #7089b3);
+  border-top: 1px solid #758fba;
+  border-right: 1px solid #6c84ab;
+  border-bottom: 1px solid #5c6f91;
+  border-left: 1px solid #6c84ab;
+  border-radius: 18px;
+  -webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+  box-shadow: inset 0 1px 0 0 #aec3e5;
+  color: #fff;
+  font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  padding: 8px 0;
+  text-align: center;
+  text-shadow: 0 -1px 1px #64799e;
+  text-transform: uppercase;
+  width: 150px; 
+  }
+
+  #add-favorite:hover,
+  #write-note:hover,
+  #save_crossword:hover {
+    background-color: #9badcc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+    background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+    background-image: linear-gradient(top, #9badcc, #687fa6);
+    border-top: 1px solid #6d86ad;
+    border-right: 1px solid #647a9e;
+    border-bottom: 1px solid #546685;
+    border-left: 1px solid #647a9e;
+    -webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+    box-shadow: inset 0 1px 0 0 #a5b9d9;
+    cursor: pointer; 
+    }
+
+    #add-favorite:active,
+    #write-note:active,
+    #save_crossword:active {
+    border: 1px solid #546685;
+    -webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+    }
+
+      .black-box {
       color:#111111;
       background-color:#111111;
       margin:-3px;
@@ -147,36 +284,19 @@
       font-weight:bold; 
       font-size:20px; 
       text-align:center;
-      background-image:url('/site_media/img/sq1.png');
       border-width:1px;
+      }
+
+      .black-box1 {
+      background-image:url('/site_media/img/sq1.png');
       }
 
       .black-box2 {
-      color:#111111;
-      background-color:#111111;
-      margin:-3px;
-      width:31px; 
-      height:31px; 
-      font-family:ballpoint, serif; 
-      font-weight:bold; 
-      font-size:20px; 
-      text-align:center;
       background-image:url('/site_media/img/sq2.png');
-      border-width:1px;
       }
 
       .black-box3 {
-      color:#111111;
-      background-color:#111111;
-      margin:-3px;
-      width:31px; 
-      height:31px; 
-      font-family:ballpoint, serif; 
-      font-weight:bold; 
-      font-size:20px; 
-      text-align:center;
       background-image:url('/site_media/img/sq3.png');
-      border-width:1px;
       }
 
       .tile {
@@ -194,21 +314,26 @@
       }
 
       .across_clues {
-      float: right;
-      font-family:"Lucida Grande","Lucida Sans Unicode","Trebuchet MS",sans-serif;
-      width: 450px;
       border-right: 1px dashed gray;
+      padding-right: 20px;
       }
 
       .down_clues {
-      float: right;
-      font-family:"Lucida Grande","Lucida Sans Unicode","Trebuchet MS",sans-serif;
-      width: 400px;
       }
 
       .clue {
-      padding:2px;
+      padding-left:2px;
+      pading-right: 2px;
+      margin-bottom: 10px;
       color: black;
+      cursor: pointer;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 15px;
+      }
+
+      .clue:hover {
+        color: #680000;
+        background: #eee;
       }
 
       .letter {
@@ -226,6 +351,42 @@
       font-weight:normal;
       }
 
+      #notes-form {
+        display:none;
+        padding-top: 20px;
+      }
+
+      .favorite {
+        font-weight: bold;
+      }
+
+      .heading {
+          border-bottom: 3px red solid;
+          margin-bottom: 20px;
+      }
+
+      .title {
+        border-bottom: 2px red solid;
+        margin-bottom: 20px;
+      }
+
+      #clue-notes {
+background: #fff9af; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2ZmZjlhZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmYxNzUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  #fff9af 1%, #fff175 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#fff9af), color-stop(100%,#fff175)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #fff9af 1%,#fff175 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #fff9af 1%,#fff175 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #fff9af 1%,#fff175 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #fff9af 1%,#fff175 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff9af', endColorstr='#fff175',GradientType=0 ); /* IE6-8 */
+border: none;
+color: #111;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 15px;
+      width: 100%;
+}
     </style>
     <!--[if lt IE 7]>
 	<script defer type="text/javascript" src="/site_media/js/pngfix.js"></script>
@@ -233,17 +394,9 @@
 	<![endif]-->
   </head>
   <body>
-    <div class="down_clues">
-      {% for down_clue in down %}
-      <div id="{{ down_clue.square }}c" class="clue"> {{ down_clue.code }} {{ down_clue.clue }}</div>
-      {% endfor %}
-    </div>
-
-    <div class="across_clues">
-      {% for across_clue in across %}
-      <div id="{{ across_clue.square }}c" class="clue"> {{ across_clue.code }} {{ across_clue.clue }}</div>
-      {% endfor %}
-    </div>
+<div class="container_12">
+  <div class="grid_12 heading"><h1>{{ name }}, {{ appeared|date:"jS F Y" }}</h1></div>
+   <div class="grid_5">
     <form action="/save/" method="POST">
       <input type="hidden" id="grid_id" name="grid_id" value="{{ grid_id }}"/>
       <table class="grid">
@@ -255,7 +408,7 @@
 	  {% endif %}
 	  {% ifequal i.grid "0" %}
 	  <td>
-	    <div type="text" id="box_{{ forloop.counter }}" class="{% cycle 'black-box1' 'black-box2' 'black-box3'%}"/>
+	    <div id="box_{{ forloop.counter }}" class="black-box {% cycle 'black-box1' 'black-box2' 'black-box3'%}"/>
 	    <input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
 	  </td>
 	  {% else %}
@@ -282,6 +435,28 @@
       </table>
       <input type="submit" value="save" id="save_crossword"/>
     </form>
+      <div id="notes-form">
+        <input type="hidden" id="clue-id" name="clue-id" value=""/>
+        <div><textarea rows="4" id="clue-notes"></textarea></div>
+        <input type="submit" value="write note" id="write-note"/>
+	<input type="button" value="mark as favorite" id="add-favorite"/>
+      </div>
+    </div>
+    <div class="grid_3 across_clues">
+      <h3 class="title">Across</h3>
+      {% for across_clue in across %}
+      <div id="{{ across_clue.square }}c" class="clue {% if across_clue.favorite %} favorite {% endif %}"> {{ across_clue.code }} {{ across_clue.clue }}</div>
+      <div class="notes"> {{ across_clue.note }} </div>
+      {% endfor %}
+    </div>
+    <div class="grid_3 down_clues">
+      <h3 class="title">Down</h3>
+      {% for down_clue in down %}
+      <div id="{{ down_clue.square }}c" class="clue{% if down_clue.favorite %} favorite {% endif %}"> {{ down_clue.code }} {{ down_clue.clue }}</div>
+      <div class="notes"> {{ down_clue.note }} </div>
+      {% endfor %}
+    </div>
+</div>
   </body>
 </html>
 

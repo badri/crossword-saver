@@ -1,7 +1,9 @@
 <html>
   <head>
     <link rel="stylesheet" href="/site_media/css/style.css" type="text/css">
-    <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="/site_media/js/cwsJS.js"></script>
   </head>
   <body>
@@ -62,6 +64,7 @@
 
     <script type="text/javascript" charset="utf-8">
       $(document).ready(function(){
+      $("#id_appeared").datepicker({ dateFormat: 'yy-mm-dd' });
       $("#write_clues").click(function() {
       CW.removeNumbers(); CW.numberCrossword();
       writeclueAnswerBoxes();
@@ -107,8 +110,7 @@
     <a href="javascript:;" class="minibutton"><span id="write_clues">Write Clues</span></a>
     <a href="javascript:;" class="minibutton"><span id="paste_clues">Paste Clues</span></a>
     <form id="paperEntry" action="/create/" method="POST" name="PaperEntry">
-      <div>name</div><input id="name" type="text" name="name"/>
-      <div>description</div><input id="description" type="text" name="description"/>
+      {{ xword.as_p }}
       <div id="CABoxes"></div>
     </form>
   </body>
