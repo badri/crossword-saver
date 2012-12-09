@@ -1,394 +1,263 @@
-/*
-  The original subSilver Theme for phpBB version 2+
-  Created by subBlue design
-  http://www.subBlue.com
-*/
-
-
- /* General page style. The scroll bar colours only visible in IE5.5+ */
-body {
-	background-color: white;
-	margin: 0;
-	scrollbar-face-color: #DEE3E7;
-	scrollbar-highlight-color: #FFFFFF;
-	scrollbar-shadow-color: #DEE3E7;
-	scrollbar-3dlight-color: #D1D7DC;
-	scrollbar-arrow-color:  #006699;
-	scrollbar-track-color: #EFEFEF;
-	scrollbar-darkshadow-color: #98AAB1;
+a.minibutton {
+    text-decoration: none;
+    padding: 8px;
+}
+#clue_submit,
+#paste_clues {
+    background-color: #a5b8da;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+    background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: linear-gradient(top, #a5b8da, #7089b3);
+    border-top: 1px solid #758fba;
+    border-right: 1px solid #6c84ab;
+    border-bottom: 1px solid #5c6f91;
+    border-left: 1px solid #6c84ab;
+    border-radius: 18px;
+    -webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+    box-shadow: inset 0 1px 0 0 #aec3e5;
+    color: #fff;
+    font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    padding: 8px;
+    text-align: center;
+    text-shadow: 0 -1px 1px #64799e;
+    text-transform: uppercase;
+    width: 150px; 
 }
 
-/* General font families for common tags */
-font,th,td,p { font-family: Verdana, Arial, Helvetica, sans-serif }
-a:link,a:active,a:visited { color : #006699; }
-a:hover		{ text-decoration: underline; color : #DD6900; }
-hr	{ height: 0px; border: solid #D1D7DC 0px; border-top-width: 1px;}
-
-
-/* This is the border line & background colour round the entire page */
-.bodyline	{ background-color: #FFFFFF; border: 1px #98AAB1 solid; }
-
-/* This is the outline round the main forum tables */
-.forumline	{ background-color: #FFFFFF; border: 2px #006699 solid; }
-
-
-/* Main table cell colours and backgrounds */
-td.row1	{ background-color: #EFEFEF; padding-left: 5px; }
-td.row2	{ background-color: #DEE3E7; padding-left: 5px; }
-td.row3	{ background-color: #D1D7DC; padding-left: 5px; }
-
-
-/*
-  This is for the table cell above the Topics, Post & Last posts on the index.php page
-  By default this is the fading out gradiated silver background.
-  However, you could replace this with a bitmap specific for each forum
-*/
-td.rowpic {
-		background-color: #FFFFFF;
-		background-image: url(images/cellpic2.jpg);
-		background-repeat: repeat-y;
+#clue_submit:hover,
+#paste_clues:hover {
+    background-color: #9badcc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+    background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+    background-image: linear-gradient(top, #9badcc, #687fa6);
+    border-top: 1px solid #6d86ad;
+    border-right: 1px solid #647a9e;
+    border-bottom: 1px solid #546685;
+    border-left: 1px solid #647a9e;
+    -webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+    box-shadow: inset 0 1px 0 0 #a5b9d9;
+    cursor: pointer; 
 }
 
-/* Header cells - the blue and silver gradient backgrounds */
-th	{
-	color: #FFA34F; font-size: 11px; font-weight : bold;
-	background-color: #006699; height: 25px;
-	background-image: url(images/cellpic3.gif);
-}
-
-td.tb	{	background-image: url(images/cellpic3.gif);
-		background-repeat: repeat-x;
-}
-
-td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom {
-			background-image: url(images/cellpic1.gif);
-			background-color:#D1D7DC; border: #FFFFFF; border-style: solid; height: 28px;
+#clue_submit:active,
+#paste_clues:active {
+    border: 1px solid #546685;
+    -webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
 }
 
 
-/*
-  Setting additional nice inner borders for the main table cells.
-  The names indicate which sides the border will be on.
-  Don't worry if you don't understand this, just ignore it :-)
-*/
-td.cat,td.catHead,td.catBottom {
-	height: 29px;
-	border-width: 0px 0px 0px 0px;
+table.grid {
+    border-spacing: 1px;
+    border-collapse: separate;
 }
-th.thHead,th.thSides,th.thTop,th.thLeft,th.thRight,th.thBottom,th.thCornerL,th.thCornerR {
-	font-weight: bold; border: #FFFFFF; border-style: solid; height: 28px; }
-td.row3Right,td.spaceRow {
-	background-color: #D1D7DC; border: #FFFFFF; border-style: solid; }
+table.grid td {
+    padding: 2px;
+}
+@font-face {
+    font-family:"ballpoint";
+    src:url("/site_media/fonts/fg-ballpoint.ttf");
+}
+.notes { display: none; }
+.grid {
+    margin-bottom: 20px;
+}
 
-th.thHead,td.catHead { font-size: 12px; border-width: 1px 1px 0px 1px; }
-th.thSides,td.catSides,td.spaceRow	 { border-width: 0px 1px 0px 1px; }
-th.thRight,td.catRight,td.row3Right	 { border-width: 0px 1px 0px 0px; }
-th.thLeft,td.catLeft	  { border-width: 0px 0px 0px 1px; }
-th.thBottom,td.catBottom  { border-width: 0px 1px 1px 1px; }
-th.thTop	 { border-width: 1px 0px 0px 0px; }
-th.thCornerL { border-width: 1px 0px 0px 1px; }
-th.thCornerR { border-width: 1px 1px 0px 0px; }
-
-
-/* The largest text used in the index page title and toptic title etc. */
-.maintitle,h1,h2	{
-			font-weight: bold; font-size: 22px; font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif;
-			text-decoration: none; line-height : 120%; color : #000000;
+#add-favorite,
+#write-note {
+    margin-top: 20px;
 }
 
 
-/* General text */
-.gen { font-size : 12px; }
-.genmed { font-size : 11px; }
-.gensmall { font-size : 10px; }
-.gen,.genmed,.gensmall { color : #000000; }
-a.gen,a.genmed,a.gensmall { color: #006699; text-decoration: none; }
-a.gen:hover,a.genmed:hover,a.gensmall:hover	{ color: #DD6900; text-decoration: underline; }
-
-
-/* The register, login, search etc links at the top of the page */
-.mainmenu		{ font-size : 11px; color : #000000 }
-a.mainmenu		{ text-decoration: none; color : #006699;  }
-a.mainmenu:hover{ text-decoration: underline; color : #DD6900; }
-
-
-/* Forum category titles */
-.cattitle		{ font-weight: bold; font-size: 12px ; letter-spacing: 1px; color : #006699; padding-left: 5px; }
-a.cattitle		{ text-decoration: none; color : #006699; }
-a.cattitle:hover{ text-decoration: underline; }
-
-
-/* Forum title: Text and link to the forums used in: index.php */
-.forumlink		{ font-weight: bold; font-size: 12px; color : #006699; }
-a.forumlink 	{ text-decoration: none; color : #006699; }
-a.forumlink:hover{ text-decoration: underline; color : #DD6900; }
-
-
-
-/* Quote & Code blocks */
-.code {
-	font-family: Courier, 'Courier New', sans-serif; font-size: 11px; color: #006600;
-	background-color: #FAFAFA; border: #D1D7DC; border-style: solid;
-	border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px
+#add-favorite,
+#write-note,
+#save_crossword {
+    background-color: #a5b8da;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+    background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+    background-image: linear-gradient(top, #a5b8da, #7089b3);
+    border-top: 1px solid #758fba;
+    border-right: 1px solid #6c84ab;
+    border-bottom: 1px solid #5c6f91;
+    border-left: 1px solid #6c84ab;
+    border-radius: 18px;
+    -webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+    box-shadow: inset 0 1px 0 0 #aec3e5;
+    color: #fff;
+    font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    padding: 8px 0;
+    text-align: center;
+    text-shadow: 0 -1px 1px #64799e;
+    text-transform: uppercase;
+    width: 150px; 
 }
 
-.quote {
-	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #444444; line-height: 125%;
-	background-color: #FAFAFA; border: #D1D7DC; border-style: solid;
-	border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px
+#add-favorite:hover,
+#write-note:hover,
+#save_crossword:hover {
+    background-color: #9badcc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+    background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+    background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+    background-image: linear-gradient(top, #9badcc, #687fa6);
+    border-top: 1px solid #6d86ad;
+    border-right: 1px solid #647a9e;
+    border-bottom: 1px solid #546685;
+    border-left: 1px solid #647a9e;
+    -webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+    box-shadow: inset 0 1px 0 0 #a5b9d9;
+    cursor: pointer; 
 }
 
-
-/* Copyright and bottom info */
-.copyright {
-	font-size: 10px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	letter-spacing: -1px;
-	background-color: #DBDBDB; border: 2px inset #D1D7DC;
-	width: 200px; padding: 1px;
-}
-a.copyright { color: #444444; text-decoration: none; }
-a.copyright:hover { text-decoration: none; }
-
-
-/* Form elements */
-input,textarea, select {
-	color : #000000;
-	font: normal 11px Verdana, Arial, Helvetica, sans-serif;
-	border-color : #000000;
+#add-favorite:active,
+#write-note:active,
+#save_crossword:active {
+    border: 1px solid #546685;
+    -webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
 }
 
-/* The text input fields background colour */
-input.post, textarea.post, select {
-	background-color : #FFFFFF;
+.black-box {
+    color:#111111;
+    background-color:#111111;
+    margin:-3px;
+    width:31px; 
+    height:31px; 
+    font-family:ballpoint, serif; 
+    font-weight:bold; 
+    font-size:20px; 
+    text-align:center;
+    border-width:1px;
 }
 
-input { text-indent : 2px; }
-
-/* The buttons used for bbCode styling in message post */
-input.button {
-	background-color : #EFEFEF;
-	color : #000000;
-	font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif;
+.black-box1 {
+    background-image:url('/site_media/img/sq1.png');
 }
 
-/* The main submit button option */
-input.mainoption {
-	background-color : #FAFAFA;
-	font-weight : bold;
+.black-box2 {
+    background-image:url('/site_media/img/sq2.png');
 }
 
-/* None-bold submit button */
-input.liteoption {
-	background-color : #FAFAFA;
-	font-weight : normal;
+.black-box3 {
+    background-image:url('/site_media/img/sq3.png');
 }
 
-/* Import the fancy styles for IE only (NS4.x doesn't use the @import function) */
-@import url("formIE.css");
-
-
-/*CSS for normal documents without the sidebar*/
-div#documentcontent{
-	padding: 10px;
-}
-ol#rules li ol li {
-	padding-bottom: 1.5em;
-	list-style: lower-alpha;
-}
-ol#ircrules li {
-	padding-bottom: 1.5em;
-}
-#documentcontent table form{
-	margin: 0; padding: 0; 
+.tile {
+    color:blue;
+    margin:-3px;
+    width:30px; 
+    height:30px; 
+    font-family:ballpoint, serif; 
+    font-weight:bold; 
+    font-size:20px; 
+    text-align:center;
+    border-width:1px;
+    border: 1px solid;
+    border-color: black;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.button {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 100%;
-        border: 1px solid #005D8C;
-        background-image : url('images/button_bg.gif');
-        background-position-y: 50%
+.across_clues {
+    border-right: 1px dashed gray;
+    padding-right: 20px;
 }
 
-.buttondown {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 100%;
-        border: 1px solid #005D8C;
-        background-image : url('images/button_on_bg.gif');
-        background-position-y:50%
+.down_clues {
 }
 
-.XPButtonUp {
-	background-image: url('../img/xp_button_on.gif');
-	background-repeat: no-repeat;
-	width: 138px;
-	height: 24px;
-	font-weight: bold;
-	cursor: pointer;
-	padding-top: 3px;
+.clue {
+    padding-left:2px;
+    pading-right: 2px;
+    margin-bottom: 10px;
+    color: black;
+    cursor: pointer;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
 }
 
-.XPButtonUp a {
-	text-decoration: none;
+.clue:hover {
+    color: #680000;
+    background: #eee;
 }
 
-.XPButtonDown {
-	background-image: url('../img/xp_button_off.gif');
-	background-repeat: no-repeat;
-	width: 138px;
-	height: 24px;
-	font-weight: bold;
-	cursor: pointer;
-	padding-top: 3px;
+.letter {
+    margin-top:-10px;
+    font-family:ballpoint, sans-serif;
+    font-weight:normal;
 }
 
-.numberInput {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 15px;
-        border: 1px solid #D1D7DC;
-        padding-right: 1px;
-        padding-left: 1px;
-	width: 20px;
+.number {
+    padding-top:1px;
+    padding-left:1px;
+    font-size:12px;
+    color:black;
+    font-family:"Times New Roman";
+    font-weight:normal;
 }
 
-.clueInput {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 15px;
-        border: 1px solid #D1D7DC;
-        padding-right: 1px;
-        padding-left: 1px;
-	width: 390px;
+#notes-form {
+    display:none;
+    padding-top: 20px;
 }
 
-.answerInput {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 15px;
-        border: 1px solid #D1D7DC;
-        padding-right: 1px;
-        padding-left: 1px;
-	margin-left: 10px;
+.favorite {
+    font-weight: bold;
 }
 
-.concealInput {
-	border: 1px solid #D1D7DC;
-	background-color: #000000;
+.heading {
+    border-bottom: 3px red solid;
+    margin-bottom: 20px;
 }
 
-.msgLayer	{
-	font-family: Helvetica, sans-serif;
-	font-size: 14px;
-	border: 2px solid #D1D7DC;
-	background-color: #AE0E16;
-	color: #FFFFFF;
-	visibility: visible;
-	position: absolute;
-	padding: 2px;
-	top: 0px;
-	right: 0px;
+.title {
+    border-bottom: 2px red solid;
+    margin-bottom: 20px;
 }
 
-.cwNumber	{
-	border: 0px;
-	position: absolute;
-	z-index: 20;
-	width: 10px;
-	height: 10px;
-	padding-left: 2px;
-	font-family: Arial; 
-	font-size: 7pt;
-}
-
-.selectAllImg	{
-	cursor: hand;
+#clue-notes {
+    background: #fff9af; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2ZmZjlhZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmYxNzUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #fff9af 1%, #fff175 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#fff9af), color-stop(100%,#fff175)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fff9af 1%,#fff175 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fff9af 1%,#fff175 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fff9af 1%,#fff175 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #fff9af 1%,#fff175 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff9af', endColorstr='#fff175',GradientType=0 ); /* IE6-8 */
+    border: none;
+    color: #111;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
+    width: 100%;
 }
 
 
-
-
-/*	Styles for the main content table.	*/
-.CWSHeader {
-	background-image: url('../img/JLogo.jpg');
-	width: 1122px;
-	height: 134px;
+.cwNumber{
+    border: 0px;
+    position: absolute;
+    z-index: 20;
+    width: 10px;
+    height: 10px;
+    padding-left: 2px;
+    font-family: Arial; 
+    font-size: 7pt;
 }
-
-.CWSFooter {
-	background-image: url('../img/FadingBG.png');
-	background-repeat: repeat-x;
-	width: 1122px;
-	height: 60px;
-}
-
-.CWSLeft {
-	background-image: url('../img/FadeLeft.gif');
-	background-repeat: repeat-y;
-	width: 10px;
-}
-
-.CWSRight {
-	background-image: url('../img/FadeRight.gif');
-	background-repeat: repeat-y;
-	width: 10px;
-}
-/*	End main content table styles.	*/
-
-
-
-
-
-/*	Styles for inner table with rounded back corners	*/
-.CapTopLeft {
-	background-image: url('../img/CapTopLeft.gif'); width: 26px; height: 22px;
-}
-.CapTopMiddle {
-	background-image: url('../img/CapTopMiddle.gif');
-	background-repeat: repeat-x;
-	height: 22px;
-}
-.CapTopRight {
-	background-image: url('../img/CapTopRight.gif'); width: 26px; height: 22px;
-}
-.CapBottomLeft {
-	background-image: url('../img/CapBottomLeft.gif'); width: 26px; height: 22px;
-}
-.CapBottomMiddle {
-	background-image: url('../img/CapBottomMiddle.gif');
-	background-repeat: repeat-x;
-	height: 22px;
-}
-.CapBottomRight {
-	background-image: url('../img/CapBottomRight.gif'); width: 26px; height: 22px;
-}
-.CapLeft {
-	background-image: url('../img/CapLeft.gif');
-	background-repeat: repeat-y; width: 26px;
-}
-.CapRight {
-	background-image: url('../img/CapRight.gif');
-	background-position: top right;
-	background-repeat: repeat-y; width: 26px;
-}
-/*	End styles for inner table with rounded back corners	*/
 
 span {
     margin-right: 20px;
 }
 
 br {
-margin-top: 30px;
+    margin-top: 30px;
 }
