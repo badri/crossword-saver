@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     (r'^all/$', list_crosswords),
     url(r'^/(?P<newspaper>\w+)/(?P<name>\w+)$', crossword_detail,name="crossword_detail"), # Ex: thc-9936, gc-24766
     (r'^/(?P<newspaper>\w+)/$', crossword_category), # Ex: thc, ft, custom
-    (r'^create/$', create),
+    (r'^create/(?P<size>\d+)$', create),
 )
 
 # Serves media content. WARNING!! Only for development uses.

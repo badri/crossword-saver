@@ -9,7 +9,7 @@
   </head>
   <body>
     <script type="text/javascript">
-      drawCrossword( 15, 15 );
+      drawCrossword( {{ size }}, {{ size }} );
       $(document).ready(function(){
       $("#id_appeared").datepicker({ dateFormat: 'yy-mm-dd' });
       $("#write_clues").click(function() {
@@ -54,7 +54,7 @@
       });
     </script>
     <a href="#" class="minibutton"><span id="paste_clues">Paste Clues</span></a>
-    <form id="paperEntry" action="/create/" method="POST" name="PaperEntry">
+    <form id="paperEntry" action="/create/{{ size }}" method="POST" name="PaperEntry">
       {{ xword.as_p }}
       <div id="CABoxes"></div>
     </form>

@@ -1,4 +1,5 @@
 # Create your views here.
+import math
 from datetime import date
 from crosswordaddict.crosswords.models import CsPresets, CsClues, CsCrossword
 from django.shortcuts import render_to_response, redirect
@@ -23,6 +24,7 @@ def crossword(request, id):
     answers = cspreset.answers
     crossword_id = CsCrossword.objects.get(gridid=id).id
     cs_clues = CsClues.objects.filter(crosswordid=crossword_id)
+    size = int(math.sqrt(len(grid)))
     #print cs_clues
     u = User.objects.get(username='badri')
     number_info = dict([(int(x.square), {"code":x.code[:-1]}) for x in cs_clues])
@@ -42,7 +44,7 @@ def crossword(request, id):
         else:
             crossword.append({'grid':j, 'code': '', 'ans': ans})
     #print crossword
-    return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared})
+    return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared, 'size': size, 'gridlen': len(grid)})
 
 
 def list_crosswords(request):
@@ -82,7 +84,7 @@ def crossword_category(request):
 def crossword_detail(request):
     pass
 
-def create(request):
+def create(request, size=15):
     if request.method == 'POST':
         xword = request.POST
         if xword['across'] and xword['down']:
@@ -124,7 +126,7 @@ def create(request):
         return HttpResponse(response, mimetype="application/json")
     else:
         xwd_form = CrosswordForm()
-        return render_to_response('create.html', {'xword': xwd_form})
+        return render_to_response('create.html', {'xword': xwd_form, 'size': size})
 
 def crossword_add_note(request):
     if request.is_ajax():

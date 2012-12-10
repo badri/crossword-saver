@@ -94,12 +94,21 @@ table.grid td {
     box-shadow: inset 0 1px 0 0 #aec3e5;
     color: #fff;
     font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    padding: 8px 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
     text-align: center;
     text-shadow: 0 -1px 1px #64799e;
     text-transform: uppercase;
-    width: 150px; 
+    width: 150px;
 }
+
+#clue-text {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;  
+}
+
 
 #add-favorite:hover,
 #write-note:hover,

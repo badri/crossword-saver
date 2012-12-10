@@ -229,10 +229,10 @@ function drawCrossword( i, j ){
     for( var y = 1; y <= j; y++ ){
       var sq = parseInt( x*i+y );
       var sq_alt = parseInt( (i-x-1)*i+j-y+1);
-      if(sq_alt==113) sq_alt = 1234;
-      var mod_sq = sq%15;
-      var mod_sq_2 = mod_sq%2;
-      if((mod_sq_2 == 0) && (mod_sq >=2) && (mod_sq <=14) && !((sq-mod_sq)%30)==0) {
+      if(sq_alt==(i*Math.ceil(j/2-1)+Math.ceil(j/2))) sq_alt = 1234;
+      var mod_sq = sq % i;
+      var mod_sq_2 = mod_sq % 2;
+      if((mod_sq_2 == 0) && (mod_sq >=2) && (mod_sq <=(i-1)) && !((sq-mod_sq)%(i*2))==0) {
       document.write( "<td id=td" + sq + "><img src=\"/site_media/img/White.gif\" id=\"" + sq + "\" onMouseOver=\"window.status=" + sq + "\" onClick=\"swap( " + sq + " );swap( " + sq_alt + " );\"></td>" );
       }
       else {
