@@ -4,3 +4,4 @@ Thumbs.db
 .emacs.desktop
 .emacs.desktop.lock
 .idea
+venv
