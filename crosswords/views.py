@@ -25,14 +25,10 @@ def crossword(request, id):
     crossword_id = CsCrossword.objects.get(gridid=id).id
     cs_clues = CsClues.objects.filter(crosswordid=crossword_id)
     size = int(math.sqrt(len(grid)))
-    #print cs_clues
     u = User.objects.get(username='badri')
     number_info = dict([(int(x.square), {"code":x.code[:-1]}) for x in cs_clues])
     across = [({"square":int(x.square), "code":x.code[:-1], "clue":x.clue, "note":x.notes, "favorite": Favorite.objects.favorites_for_object(x,u).exists() }) for x in cs_clues if x.code[-1]=='A']
     down = [({"square":int(x.square), "code":x.code[:-1], "clue":x.clue, "note":x.notes, "favorite": Favorite.objects.favorites_for_object(x,u).exists()}) for x in cs_clues if x.code[-1]=='D']
-    #print across
-    #print down
-    #print answers
     crossword = []
     for i,j in enumerate(grid):
         try:
@@ -43,7 +39,6 @@ def crossword(request, id):
             crossword.append({'grid':j, 'code': number_info[i+1]['code'], 'ans': ans})
         else:
             crossword.append({'grid':j, 'code': '', 'ans': ans})
-    #print crossword
     return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared, 'size': size, 'gridlen': len(grid)})
 
 
@@ -53,7 +48,7 @@ def list_crosswords(request):
     return render_to_response('crossword_list.html', {'xwords': xwords_data})
 
 def crossword_save(request):
-    if request.POST:
+    if request.is_ajax():
         if 'grid_id' in request.POST:
             grid_id = request.POST['grid_id']
             grid = CsPresets.objects.get(id=grid_id)
@@ -68,13 +63,14 @@ def crossword_save(request):
                     ans.append(' ')
 
             grid.answers = ''.join(ans)
-            #print grid.answers
             grid.save()
-            return redirect('home')
+            response = {'message' : 'Crossword saved successfully.'}
+            data = simplejson.dumps(response)
+            return HttpResponse(data, mimetype='application/json')
         else:
-            return render_to_response('crossword.html', {'error':True})
-
-    return render_to_response('index.html')
+            response = {'message' : 'There was an error in saving the crossword.'}
+            data = simplejson.dumps(response)
+            return HttpResponse(data, mimetype='application/json')
 
 
     
@@ -100,7 +96,6 @@ def create(request, size=15):
                     answer = xword[clue_num+'_AA']
                     answer_length = xword[clue_num+'_A_']
                     grid_number = xword[clue_num+'_A_N']
-                    print '%s %s,%s' % (clue_num, clue_text, grid_number)
                     clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'A'})
                 if '_D#' in k:
                     clue_num = k[:-3]
@@ -108,11 +103,7 @@ def create(request, size=15):
                     answer = xword[clue_num+'_DA']
                     answer_length = xword[clue_num+'_D_']
                     grid_number = xword[clue_num+'_D_N']
-                    print '%s %s,%s' % (clue_num, clue_text, grid_number)
-                    clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'D'})
-                
-        #print xword['grid']
-        print clues
+                    clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'D'})                
         # do some kind of error checking down here.
         grid = CsPresets(grid=xword['grid'], name=xword['name'], description=xword['description'], appeared=xword['appeared'])
         grid.save()
@@ -120,7 +111,6 @@ def create(request, size=15):
         crossword.save()
         for c in clues:
             clue = CsClues(crosswordid=crossword.id, clue=c['clue'], answer=c['answer'], square=c['square'], code=c['code'])
-            print clue
             clue.save()
         response = simplejson.dumps({'success':'False', 'html':'<span> abc </span>'})
         return HttpResponse(response, mimetype="application/json")
@@ -132,7 +122,6 @@ def crossword_add_note(request):
     if request.is_ajax():
         resp = request.POST
         clue = CsClues.objects.get(crosswordid=resp['crossword'], square=resp['clue'][:-1])
-        print clue
         clue.notes = resp['note']
         clue.save()
         response = {'clue' : resp['clue'], 'note': resp['note']}

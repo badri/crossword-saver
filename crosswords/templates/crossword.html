@@ -191,6 +191,19 @@
       Cufon.replace('.letter');
       }
 
+      $('#grid-form').submit(function() {
+            $.ajax({
+                data: $(this).serialize(),
+                dataType: "json",
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function(response) {
+                    $('div.save-message').html(response['message']);
+                }
+            });
+            return false;
+        });
+
       var alphabets = 'abcdefghijklmnopqrstuvwxyz';
       for(var i=0; i <= alphabets.length; i++) {
 			$(document).bind('keydown', alphabets[i], key_map);
@@ -206,8 +219,11 @@
   </head>
   <body>
     <div class="container_12">
-      <div class="grid_12 heading"><h1>{{ name }}, {{ appeared|date:"jS F Y" }}</h1></div>
-      <form action="/save/" method="POST">
+      <div class="grid_12 heading">
+	<h1>{{ name }}, {{ appeared|date:"jS F Y" }}</h1>	
+      </div>
+      <div class="grid_12"><div class="save-message"></div></div>
+      <form id="grid-form" action="/save/" method="POST">
 	<input type="hidden" id="grid_id" name="grid_id" value="{{ grid_id }}"/>
 	<div class="grid_8">
 	  <table class="grid">
