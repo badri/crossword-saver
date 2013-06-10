@@ -1,7 +1,7 @@
 # Create your views here.
 import math
 from datetime import date
-from crosswordaddict.crosswords.models import CsPresets, CsClues, CsCrossword
+from .models import CsPresets, CsClues, CsCrossword
 from django.shortcuts import render_to_response, redirect
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
