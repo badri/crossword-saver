@@ -34,8 +34,6 @@ class CsCrossword(models.Model):
         db_table = u'cs_crossword'
 
     def save(self, *args, **kwargs):
-        print args
-        print kwargs
         super(CsCrossword, self).save(*args, **kwargs) # Call the "real" save() method.
 
 
