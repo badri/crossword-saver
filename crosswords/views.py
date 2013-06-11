@@ -121,7 +121,7 @@ def create(request, size=15):
 def crossword_add_note(request):
     if request.is_ajax():
         resp = request.POST
-        clue = CsClues.objects.get(crosswordid=resp['crossword'], square=resp['clue'][:-1])
+        clue = CsClues.objects.get(crosswordid=resp['crossword'], code=resp['clue'])
         clue.notes = resp['note']
         clue.save()
         response = {'clue' : resp['clue'], 'note': resp['note']}
@@ -131,9 +131,17 @@ def crossword_add_note(request):
 def clue_add_favorite(request):
     if request.is_ajax():
         resp = request.POST
-        clue = CsClues.objects.get(crosswordid=resp['crossword'], square=resp['clue'][:-1])
+        clue = CsClues.objects.get(crosswordid=resp['crossword'], code=resp['clue'])
         user = User.objects.get(username='badri')
         Favorite.objects.create_favorite(clue, user)
         response = {'clue' : resp['clue']}
+        data = simplejson.dumps(response)
+        return HttpResponse(data, mimetype='application/json')
+
+def clue_reveal_answer(request):
+    if request.is_ajax():
+        resp = request.POST
+        clue = CsClues.objects.get(crosswordid=resp['crossword'], code=resp['clue'])
+        response = {'answer' : clue.answer}
         data = simplejson.dumps(response)
         return HttpResponse(data, mimetype='application/json')

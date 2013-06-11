@@ -61,7 +61,7 @@
       var in_focus = "0";
       var f = function(e) {
       $('#notes-form').show();
-      $('#clue-id').attr('value', e.attr('id'));
+      $('#clue-id').attr('value', e.attr('data-code'));
       $('#clue-notes').val(trim(e.next().text()));
       $('#clue-text').text(e.text());
       };
@@ -73,7 +73,7 @@
       url: "/add-note/",
       data: { "clue": $('#clue-id').val(), "note": $('#clue-notes').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
       error: handleFail,
-      success : done2
+      success : write_node_success
       });
       });
 
@@ -84,14 +84,40 @@
       url: "/add-favorite/",
       data: { "clue": $('#clue-id').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
       error: handleFail,
-      success : done
+      success : add_favorite_success
+      });
+      });
+
+      $('#reveal').click(function() {
+      $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: "/reveal/",
+      data: { "clue": $('#clue-id').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
+      error: handleFail,
+      success : reveal_success
       });
       });
       
       $('#clue-notes').focus(function() {in_focus = "x";});
       var handleFail = function(xhr, msg) {alert(msg);}
-      var done2 = function(data) { $('#'+data.clue).next().text(data.note); }
-      var done = function(data) { $('#'+data.clue).addClass('favorite'); }
+      var write_node_success = function(data) {
+        $("div").find("[data-code='" + data.clue + "']").next().text(data.note); 
+      }
+      var add_favorite_success = function(data) {
+        $("div").find("[data-code='" + data.clue + "']").addClass('favorite'); 
+      }
+
+      var reveal_success = function(data) {
+      $("#box_"+in_focus).css("background-color", "white");
+      var next_square = in_focus;
+      for(var i = 0;i< data.answer.length; ++i) {
+        $("#box_"+next_square + "> .letter").text(data.answer[i]);
+        $("#box_"+ next_square + "> input").val(data.answer[i]);
+        in_focus = next_square;
+        next_square = find_next_square();
+      }
+      }
 
       $(".across_clues > .clue").click(function(e) {
       align = "across";
@@ -269,6 +295,7 @@
             <div><textarea rows="4" id="clue-notes"></textarea></div>
             <input type="submit" value="write note" id="write-note"/>
 	    <input type="button" value="mark as favorite" id="add-favorite"/>
+	    <input type="button" value="reveal" id="reveal"/>
 	  </div>
 	</div>
       </form>
@@ -276,14 +303,14 @@
       <div class="grid_5 across_clues">
 	<h3 class="title">Across</h3>
 	{% for across_clue in across %}
-	<div id="{{ across_clue.square }}c" class="clue {% if across_clue.favorite %} favorite {% endif %}"> {{ across_clue.code }} {{ across_clue.clue }}</div>
+	<div id="{{ across_clue.square }}c" class="clue {% if across_clue.favorite %} favorite {% endif %}" data-code="{{ across_clue.code }}A"> {{ across_clue.code }} {{ across_clue.clue }}</div>
 	<div class="notes"> {{ across_clue.note }} </div>
 	{% endfor %}
       </div>
       <div class="grid_5 down_clues">
 	<h3 class="title">Down</h3>
 	{% for down_clue in down %}
-	<div id="{{ down_clue.square }}c" class="clue{% if down_clue.favorite %} favorite {% endif %}"> {{ down_clue.code }} {{ down_clue.clue }}</div>
+	<div id="{{ down_clue.square }}c" class="clue{% if down_clue.favorite %} favorite {% endif %}" data-code="{{ down_clue.code }}D"> {{ down_clue.code }} {{ down_clue.clue }}</div>
 	<div class="notes"> {{ down_clue.note }} </div>
 	{% endfor %}
       </div>

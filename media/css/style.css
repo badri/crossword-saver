@@ -74,7 +74,7 @@ table.grid td {
     margin-top: 20px;
 }
 
-
+#reveal,
 #add-favorite,
 #write-note,
 #save_crossword {
@@ -110,6 +110,7 @@ table.grid td {
 }
 
 
+#reveal:hover,
 #add-favorite:hover,
 #write-note:hover,
 #save_crossword:hover {

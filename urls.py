@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     (r'^save/$', crossword_save),
     (r'^add-note/$', crossword_add_note),
     (r'^add-favorite/$', clue_add_favorite),
+    (r'^reveal/$', clue_reveal_answer),
     (r'^all/$', list_crosswords),
     url(r'^/(?P<newspaper>\w+)/(?P<name>\w+)$', crossword_detail,name="crossword_detail"), # Ex: thc-9936, gc-24766
     (r'^/(?P<newspaper>\w+)/$', crossword_category), # Ex: thc, ft, custom
