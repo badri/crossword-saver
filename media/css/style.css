@@ -60,10 +60,7 @@ table.grid {
 table.grid td {
     padding: 2px;
 }
-@font-face {
-    font-family:"ballpoint";
-    src:url("/site_media/fonts/fg-ballpoint.ttf");
-}
+
 .notes { display: none; }
 .grid {
     margin-bottom: 20px;
@@ -142,25 +139,13 @@ table.grid td {
     color:#111111;
     background-color:#111111;
     margin:-3px;
-    width:31px; 
-    height:31px; 
+    width:32px; 
+    height:32px; 
     font-family:ballpoint, serif; 
     font-weight:bold; 
     font-size:20px; 
     text-align:center;
     border-width:1px;
-}
-
-.black-box1 {
-    background-image:url('/site_media/img/sq1.png');
-}
-
-.black-box2 {
-    background-image:url('/site_media/img/sq2.png');
-}
-
-.black-box3 {
-    background-image:url('/site_media/img/sq3.png');
 }
 
 .tile {

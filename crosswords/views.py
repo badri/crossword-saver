@@ -41,6 +41,16 @@ def crossword(request, id):
             crossword.append({'grid':j, 'code': '', 'ans': ans})
     return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared, 'size': size, 'gridlen': len(grid)})
 
+def crossword2(request, id):
+    cspreset = get_object_or_404(CsPresets, pk=id)
+    grid = cspreset.grid
+    answers = cspreset.answers
+    crossword_id = CsCrossword.objects.get(gridid=id).id
+    cs_clues = CsClues.objects.filter(crosswordid=crossword_id)
+    orientation = {'D': 'down', 'A': 'across'}
+    puzzle_data = [{"clue": x.clue, "answer": x.answer, "startx": x.square%15, "starty": x.square/15 + 1, "orientation": orientation[x.code[-1]] } for x in cs_clues]
+    return render_to_response('crossword2.html', {'name': cspreset.name, 'appeared': cspreset.appeared, 'puzzle_data': simplejson.dumps(puzzle_data)})
+
 
 def list_crosswords(request):
     xwords = []

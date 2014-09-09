@@ -1,102 +1,70 @@
 <html>
   <head>
-    <!--
-	some google fonts for use
-	font-family: 'Gloria Hallelujah', cursive;
-	font-family: 'Coming Soon', cursive;
-	font-family: 'Delius', cursive;
-	font-family: 'Rock Salt', cursive;
-	font-family: 'Architects Daughter', cursive;
-	font-family: 'Permanent Marker', cursive;
-	font-family: 'Indie Flower', cursive;
-	font-family: 'Schoolbell', cursive;
-	font-family: 'Neucha', cursive;
-      -->
     <title>{{ name }} | xwords</title>
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/site_media/js/jquery-1.3.2.js"></script>
     <script type="text/javascript" src="/site_media/js/jquery.hotkeys-0.7.8.js"></script>
-    <script type="text/javascript" src="/site_media/js/cufon-yui.js"></script>
-    <script type="text/javascript" src="/site_media/js/ballpoint_400.font.lh.js"></script>
-    <link rel="stylesheet" href="/site_media/css/master.css" />
     <link rel="stylesheet" href="/site_media/css/style.css" />
-    <noscript>
-      <link rel="stylesheet" href="/site_media/css/mobile.min.css" />
-    </noscript>
-    <script>
-      // Edit to suit your needs.
-      var ADAPT_CONFIG = {
-      // Where is your CSS?
-      path: '/site_media/css/',
-
-      // false = Only run once, when page first loads.
-      // true = Change on window resize and page tilt.
-      dynamic: true,
-
-      // First range entry is the minimum.
-      // Last range entry is the maximum.
-      // Separate ranges by "to" keyword.
-      range: [
-      '0px    to 760px  = mobile.min.css',
-      '760px  to 980px  = 720.min.css',
-      '980px  to 1280px = 960.min.css',
-      '1280px to 1600px = 1200.min.css',
-      '1600px to 1940px = 1560.min.css',
-      '1940px to 2540px = 1920.min.css',
-      '2540px           = 2520.min.css'
-      ]
-      };
-    </script>
-    <script src="/site_media/js/adapt.min.js"></script>
-    <script type="text/javascript">
-      Cufon.replace('.letter');
-    </script>
     <script type="text/javascript" charset="utf-8">
       function trim(s){ 
-      return ( s || '' ).replace( /^\s+|\s+$/g, '' ); 
+        return ( s || '' ).replace( /^\s+|\s+$/g, '' ); 
       }
+
       $(document).ready(function(){
       // defaults
       var align = "across";
       var in_focus = "0";
       var f = function(e) {
-      $('#notes-form').show();
-      $('#clue-id').attr('value', e.attr('data-code'));
-      $('#clue-notes').val(trim(e.next().text()));
-      $('#clue-text').text(e.text());
+        $('#notes-form').show();
+        $('#clue-id').attr('value', e.attr('data-code'));
+        $('#clue-notes').val(trim(e.next().text()));
+        $('#clue-text').text(e.text());
       };
 
       $('#write-note').click(function() {
       $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: "/add-note/",
-      data: { "clue": $('#clue-id').val(), "note": $('#clue-notes').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
-      error: handleFail,
-      success : write_node_success
+        type: "POST",
+        dataType: "json",
+        url: "/add-note/",
+        data: {
+          "clue": $('#clue-id').val(),
+          "note": $('#clue-notes').val(),
+          "crossword" : {{ crossword_id }},
+          csrfmiddlewaretoken: '{{ csrf_token }}' 
+        },
+        error: handleFail,
+        success : write_node_success
       });
       });
 
       $('#add-favorite').click(function() {
-      $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: "/add-favorite/",
-      data: { "clue": $('#clue-id').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
-      error: handleFail,
-      success : add_favorite_success
-      });
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: "/add-favorite/",
+          data: {
+            "clue": $('#clue-id').val(),
+            "crossword" : {{ crossword_id }},
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          error: handleFail,
+          success : add_favorite_success
+        });
       });
 
       $('#reveal').click(function() {
-      $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: "/reveal/",
-      data: { "clue": $('#clue-id').val(), "crossword" : {{ crossword_id }},  csrfmiddlewaretoken: '{{ csrf_token }}' },
-      error: handleFail,
-      success : reveal_success
-      });
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: "/reveal/",
+          data: { 
+            "clue": $('#clue-id').val(),
+            "crossword" : {{ crossword_id }},
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          error: handleFail,
+          success : reveal_success
+        });
       });
       
       $('#clue-notes').focus(function() {in_focus = "x";});
@@ -109,149 +77,142 @@
       }
 
       var reveal_success = function(data) {
-      $("#box_"+in_focus).css("background-color", "white");
-      var next_square = in_focus;
-      for(var i = 0;i< data.answer.length; ++i) {
-        $("#box_"+next_square + "> .letter").text(data.answer[i]);
-        $("#box_"+ next_square + "> input").val(data.answer[i]);
-        in_focus = next_square;
-        next_square = find_next_square();
-      }
+        $("#box_"+in_focus).css("background-color", "white");
+        var next_square = in_focus;
+        for(var i = 0;i< data.answer.length; ++i) {
+          $("#box_"+next_square + "> .letter").text(data.answer[i]);
+          $("#box_"+ next_square + "> input").val(data.answer[i]);
+          in_focus = next_square;
+          next_square = find_next_square();
+        }
       }
 
       $(".across_clues > .clue").click(function(e) {
-      align = "across";
-      $("#box_"+in_focus).css("background-color", "white");
-      in_focus = this.id.slice(0, this.id.length-1);
-      $("#box_"+in_focus).css("background-color", "#99cc00");
-      f($(this));
-      if($(this).hasClass('favorite')) {
-      $('#add-favorite').hide();
-      }
-      else {
-      $('#add-favorite').show();
-      }
+        align = "across";
+        $("#box_"+in_focus).css("background-color", "white");
+        in_focus = this.id.slice(0, this.id.length-1);
+        $("#box_"+in_focus).css("background-color", "#99cc00");
+        f($(this));
+        if($(this).hasClass('favorite')) {
+          $('#add-favorite').hide();
+        }
+        else {
+          $('#add-favorite').show();
+        }
       });
 
       $(".down_clues > .clue").click(function(e) {
-      align = "down";
-      $("#box_"+in_focus).css("background-color", "white");
-      in_focus = this.id.slice(0, this.id.length-1);
-      $("#box_"+in_focus).css("background-color", "#99cc00");
-      f($(this));
-      if($(this).hasClass('favorite')) {
-      $('#add-favorite').hide();
-      }
-      else {
-      $('#add-favorite').show();
-      }
+        align = "down";
+        $("#box_"+in_focus).css("background-color", "white");
+        in_focus = this.id.slice(0, this.id.length-1);
+        $("#box_"+in_focus).css("background-color", "#99cc00");
+        f($(this));
+        if($(this).hasClass('favorite')) {
+          $('#add-favorite').hide();
+        }
+        else {
+          $('#add-favorite').show();
+        }
       });
 
       function find_next_square() {
-      if(align == "across") {
-      var next_square = parseInt(in_focus) + 1;
-      }
-      else {
-      var next_square = parseInt(in_focus) + {{ size }};
-      }
-      return next_square;
+        if(align == "across") {
+          var next_square = parseInt(in_focus) + 1;
+        }
+        else {
+          var next_square = parseInt(in_focus) + {{ size }};
+        }
+        return next_square;
       }
 
       function find_prev_square() {
-      if(align == "across") {
-      var prev_square = parseInt(in_focus) - 1;
-      }
-      else {
-      var prev_square = parseInt(in_focus) - {{ size }};
-      }
-      return prev_square;
+        if(align == "across") {
+          var prev_square = parseInt(in_focus) - 1;
+        }
+        else {
+          var prev_square = parseInt(in_focus) - {{ size }};
+        }
+        return prev_square;
       }
 
       function is_across(current_box) {
-      if((current_box % 15 == 0) || (current_box % 15 == 1)) {
-      current_box= parseInt(current_box)+15;
-      return ($("#box_"+current_box).attr("class").indexOf("black-box") != -1);
-      }
-      var next_square = parseInt(current_box) + 1;
-      var prev_square = parseInt(current_box) - 1;
-      if(next_square > {{ gridlen }}) {
-      return true;
-      }
-      return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) || 
-      ($("#box_"+prev_square).attr("class").indexOf("black-box") == -1) );
+        if((current_box % 15 == 0) || (current_box % 15 == 1)) {
+          current_box= parseInt(current_box)+15;
+          return ($("#box_"+current_box).attr("class").indexOf("black-box") != -1);
+        }
+        var next_square = parseInt(current_box) + 1;
+        var prev_square = parseInt(current_box) - 1;
+        if(next_square > {{ gridlen }}) {
+          return true;
+        }
+        return ( ($("#box_"+next_square).attr("class").indexOf("black-box") == -1) || 
+        ($("#box_"+prev_square).attr("class").indexOf("black-box") == -1) );
       }
 
       $(".tile").click(function(e) {
-      var current_box = this.id.split("_")[1];
-      if(is_across(current_box)) {
-      align = "across";
-      }
-      else {
-      align = "down";
-      }
-      $("#box_"+in_focus).css("background-color", "white");
-      in_focus = this.id.split("_")[1];
-      $("#box_"+in_focus).css("background-color", "#99cc00");
+        var current_box = this.id.split("_")[1];
+        if(is_across(current_box)) {
+          align = "across";
+        }
+        else {
+          align = "down";
+        }
+        $("#box_"+in_focus).css("background-color", "white");
+        in_focus = this.id.split("_")[1];
+        $("#box_"+in_focus).css("background-color", "#99cc00");
       });
 
       var bkspc = function(s){
-      $("#box_"+in_focus).css("background-color", "white");
-      in_focus = find_prev_square(); 
-      $("#box_"+in_focus + "> .letter").text("");
-      $("#box_"+in_focus + "> input").val("");
-      $("#box_"+in_focus).css("background-color", "#99cc00");
+        $("#box_"+in_focus).css("background-color", "white");
+        in_focus = find_prev_square(); 
+        $("#box_"+in_focus + "> .letter").text("");
+        $("#box_"+in_focus + "> input").val("");
+        $("#box_"+in_focus).css("background-color", "#99cc00");
       }
 
       $(document).bind('keydown', 'backspace', bkspc);
 
 
-      var key_map = function(s){
-      $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
-      $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
-      $("#box_"+in_focus).css("background-color", "white");
-      var next_square = find_next_square();
-      if(next_square > {{ gridlen }}) { Cufon.replace('.letter'); return false; }
-      if($("#box_"+next_square).attr("class").indexOf("black-box") != -1) { Cufon.replace('.letter'); return false; }
-      in_focus = next_square;
-      $("#box_"+in_focus).css("background-color", "#99cc00");
-      Cufon.replace('.letter');
+      var key_map = function(s) {
+        $("#box_"+in_focus + "> .letter").text(String.fromCharCode(s.keyCode));
+        $("#box_"+in_focus + "> input").val(String.fromCharCode(s.keyCode));
+        $("#box_"+in_focus).css("background-color", "white");
+        var next_square = find_next_square();
+        if(next_square > {{ gridlen }}) { return false; }
+        if($("#box_"+next_square).attr("class").indexOf("black-box") != -1) { return false; }
+        in_focus = next_square;
+        $("#box_"+in_focus).css("background-color", "#99cc00");
       }
 
-      $('#grid-form').submit(function() {
-            $.ajax({
-                data: $(this).serialize(),
-                dataType: "json",
-                type: $(this).attr('method'),
-                url: $(this).attr('action'),
-                success: function(response) {
-                    $('div.save-message').html(response['message']);
-                }
-            });
-            return false;
-        });
+    $('#grid-form').submit(function() {
+      $.ajax({
+        data: $(this).serialize(),
+        dataType: "json",
+        type: $(this).attr('method'),
+        url: $(this).attr('action'),
+        success: function(response) {
+          $('div.save-message').html(response['message']);
+        }
+      });
+      return false;
+    });
 
-      var alphabets = 'abcdefghijklmnopqrstuvwxyz';
-      for(var i=0; i <= alphabets.length; i++) {
-			$(document).bind('keydown', alphabets[i], key_map);
-			}
-
-			});
-
-			</script> 
-    <!--[if lt IE 7]>
-	<script defer type="text/javascript" src="/site_media/js/pngfix.js"></script>
-	<link rel="stylesheet" type="text/css" href="/site_media/css/ie.css" media="screen" />
-	<![endif]-->
+    var alphabets = 'abcdefghijklmnopqrstuvwxyz';
+    for(var i=0; i <= alphabets.length; i++) {
+      $(document).bind('keydown', alphabets[i], key_map);
+    }
+  });
+  </script> 
   </head>
   <body>
-    <div class="container_12">
-      <div class="grid_12 heading">
+    <div id="page">
+      <div id="heading">
 	<h1>{{ name }}, {{ appeared|date:"jS F Y" }}</h1>	
       </div>
-      <div class="grid_12"><div class="save-message"></div></div>
+      <div class="save-message"></div>
       <form id="grid-form" action="/save/" method="POST">
 	<input type="hidden" id="grid_id" name="grid_id" value="{{ grid_id }}"/>
-	<div class="grid_8">
+	<div id="crossword">
 	  <table class="grid">
 	    <tr>
 	      {% for i in crossword %}
@@ -261,7 +222,7 @@
 	      {% endif %}
 	      {% ifequal i.grid "0" %}
 	      <td>
-		<div id="box_{{ forloop.counter }}" class="black-box {% cycle 'black-box1' 'black-box2' 'black-box3'%}"/>
+		<div id="box_{{ forloop.counter }}" class="black-box"/>
 		<input type="hidden" id="{{ forloop.counter }}" name="{{ forloop.counter }}" size="1" maxlength="1" disabled="disabled" class="black-box"/>
 	      </td>
 	      {% else %}
@@ -287,7 +248,7 @@
 	    </tr>
 	  </table>
 	</div>
-	<div class="grid_4">
+	<div id="ops">
 	  <div id="clue-text"></div>
 	  <input type="submit" value="save crossword" id="save_crossword"/>
 	  <div id="notes-form">
@@ -300,14 +261,14 @@
 	</div>
       </form>
 
-      <div class="grid_5 across_clues">
+      <div class="across_clues">
 	<h3 class="title">Across</h3>
 	{% for across_clue in across %}
 	<div id="{{ across_clue.square }}c" class="clue {% if across_clue.favorite %} favorite {% endif %}" data-code="{{ across_clue.code }}A"> {{ across_clue.code }} {{ across_clue.clue }}</div>
 	<div class="notes"> {{ across_clue.note }} </div>
 	{% endfor %}
       </div>
-      <div class="grid_5 down_clues">
+      <div class="down_clues">
 	<h3 class="title">Down</h3>
 	{% for down_clue in down %}
 	<div id="{{ down_clue.square }}c" class="clue{% if down_clue.favorite %} favorite {% endif %}" data-code="{{ down_clue.code }}D"> {{ down_clue.code }} {{ down_clue.clue }}</div>
