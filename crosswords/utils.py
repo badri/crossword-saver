@@ -7,7 +7,7 @@ ignore and strip put unicode characters.
 '''
 import re
 
-clue=re.compile('(?P<number>[0-9]+)[\\.\s]*(?P<clue>[0-9A-Za-z,:;\'"\\.\\?!\\-\\(\\) ]+)\((?P<length>[0-9,-]+)\)')
+clue=re.compile(ur'(?P<number>[0-9]+)[\\.\s]*(?P<clue>[0-9A-Za-z,:;\u2014\u2019\u2026\u201c\u201d\'"\\.\\?!-\\(\\) ]+)\((?P<length>[0-9,-]+)\)')
 punctuations = re.compile("(,|-)")
 
 
@@ -35,10 +35,6 @@ class InconsistentClueException(Exception):
 def get_length(l): return eval(punctuations.sub("+",l))
 
 
-def sanitize(l):
-    l = l.replace(u'\u2019', u'\'').replace(u'\u2014', u'--').replace(u'\u2026', u'...')
-    return l
-
 def get_clues(xword,type):
     if type=='A':
         clue_list = [i.strip() for i in xword['across'].split("\n") if i]        
@@ -47,7 +43,7 @@ def get_clues(xword,type):
     parsed_clues = []
     for c in clue_list:
         try:
-            m=clue.match(sanitize(c))
+            m=clue.match(c.decode('utf-8'))
             if not m:
                 raise ClueParseException(c)
             else:
@@ -69,8 +65,8 @@ def get_clues(xword,type):
                     raise InconsistentClueException(clue_text, get_length(clue_length), submitted_clue_length)
                 parsed['clue'] = '%s (%s)' % (clue_text, clue_length)
                 parsed_clues.append(parsed)
-        except ClueParseException as c:
-            print 'Unable to parse clue:', c.value
+        except ClueParseException as ce:
+            print 'Unable to parse clue:', ce
         except GridValidationException as g:
             print 'No square found for key:', g.value
         except InconsistentClueException as i:

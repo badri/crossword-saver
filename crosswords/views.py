@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from utils import get_clues
 from forms import CrosswordForm
 from favorites.models import Favorite
-
+from puz import *
 
 def index(request):
     return render_to_response('index.html')
@@ -41,15 +41,25 @@ def crossword(request, id):
             crossword.append({'grid':j, 'code': '', 'ans': ans})
     return render_to_response('crossword.html', {'crossword':crossword, 'across': across, 'down':down, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared, 'size': size, 'gridlen': len(grid)})
 
-def crossword2(request, id):
+def download_puz(request, id):
     cspreset = get_object_or_404(CsPresets, pk=id)
     grid = cspreset.grid
     answers = cspreset.answers
     crossword_id = CsCrossword.objects.get(gridid=id).id
     cs_clues = CsClues.objects.filter(crosswordid=crossword_id)
-    orientation = {'D': 'down', 'A': 'across'}
-    puzzle_data = [{"clue": x.clue, "answer": x.answer, "startx": x.square%15, "starty": x.square/15 + 1, "orientation": orientation[x.code[-1]] } for x in cs_clues]
-    return render_to_response('crossword2.html', {'name': cspreset.name, 'appeared': cspreset.appeared, 'puzzle_data': simplejson.dumps(puzzle_data)})
+    fill = {'0': '.', '1': '-'}
+    answer_fill = {'0': '.', '1': 'A'}
+    p = Puzzle()
+    p.title = cspreset.name
+    p.fill = ''.join([fill[x] for x in cspreset.grid])
+    p.solution = ''.join([answer_fill[x] for x in cspreset.grid]) # hack
+    p.width = 15
+    p.height = 15
+    p.clues = [x.clue for x in cs_clues]
+    puz_file = '%s.puz' % cspreset.name.replace(" ", "-")
+    response = HttpResponse(p.tostring(), content_type='application/x-puz')
+    response['Content-Disposition'] = 'attachment; filename=%s' % puz_file
+    return response
 
 
 def list_crosswords(request):
