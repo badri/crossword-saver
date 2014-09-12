@@ -10,7 +10,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.utils import simplejson
 from django.contrib.auth.models import User
 
-from utils import get_clues
+from utils import get_clues, cw_obj
 from forms import CrosswordForm
 from favorites.models import Favorite
 from puz import *
@@ -62,6 +62,16 @@ def download_puz(request, id):
     return response
 
 
+def crossword2(request, id):
+    cspreset = get_object_or_404(CsPresets, pk=id)
+    grid = cspreset.grid
+    answers = cspreset.answers
+    crossword_id = CsCrossword.objects.get(gridid=id).id
+    cs_clues = CsClues.objects.filter(crosswordid=crossword_id)
+    puzzle_data = simplejson.dumps([cw_obj(x) for x in cs_clues], indent=4)
+    print puzzle_data
+    return render_to_response('crossword2.html', {'puzzle_data':puzzle_data, 'grid_id': id, 'crossword_id': crossword_id, 'name': cspreset.name, 'appeared': cspreset.appeared })
+
 def list_crosswords(request):
     xwords = []
     xwords_data = CsPresets.objects.all()
@@ -103,6 +113,7 @@ def crossword_detail(request):
 def create(request, size=15):
     if request.method == 'POST':
         xword = request.POST
+        print xword
         if xword['across'] and xword['down']:
             across_clues = get_clues(xword, 'A')
             down_clues = get_clues(xword, 'D')
@@ -115,6 +126,8 @@ def create(request, size=15):
                     clue_text = xword[clue_num+'_A']
                     answer = xword[clue_num+'_AA']
                     answer_length = xword[clue_num+'_A_']
+                    print answer_length
+                    if not answer: answer = answer_length
                     grid_number = xword[clue_num+'_A_N']
                     clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'A'})
                 if '_D#' in k:
@@ -122,6 +135,8 @@ def create(request, size=15):
                     clue_text = xword[clue_num+'_D']
                     answer = xword[clue_num+'_DA']
                     answer_length = xword[clue_num+'_D_']
+                    print answer_length
+                    if not answer: answer = answer_length
                     grid_number = xword[clue_num+'_D_N']
                     clues.append({'clue':clue_text, 'answer':answer, 'square':grid_number, 'code':clue_num+'D'})                
         # do some kind of error checking down here.
