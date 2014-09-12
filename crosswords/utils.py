@@ -6,6 +6,7 @@ better regex for multiline clues.
 ignore and strip put unicode characters.
 '''
 import re
+import math
 
 clue=re.compile(ur'(?P<number>[0-9]+)[\\.\s]*(?P<clue>[0-9A-Za-z,:;\u2014\u2019\u2026\u201c\u201d\'"\\.\\?!-\\(\\) ]+)\((?P<length>[0-9,-]+)\)')
 punctuations = re.compile("(,|-)")
@@ -79,8 +80,12 @@ def cw_obj(c):
         startx = c.square % 15
     else:
         startx = 15
-    if int(c.answer):
+    if c.answer.isdigit():
         answer = 'x' * int(c.answer)        
     else:
         answer = c.answer.lower()
-    return {"clue": c.clue, "answer": answer, "position": c.square, "startx": startx, "starty": c.square/15 + 1, "orientation": orient[c.code[-1]]}
+    if int(math.ceil(c.square/float(15))):
+        starty = int(math.ceil(c.square/float(15)))
+    else:
+        starty = 1
+    return {"clue": c.clue, "answer": answer, "position": int(c.code[:-1]), "startx": startx, "starty": starty, "orientation": orient[c.code[-1]]}
