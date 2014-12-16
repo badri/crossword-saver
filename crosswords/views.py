@@ -9,6 +9,7 @@ from django.core import serializers
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils import simplejson
 from django.contrib.auth.models import User
+from django.core.context_processors import csrf
 
 from utils import get_clues, cw_obj
 from forms import CrosswordForm
@@ -147,7 +148,9 @@ def create(request, size=15):
         return HttpResponse(response, mimetype="application/json")
     else:
         xwd_form = CrosswordForm()
-        return render_to_response('create.html', {'xword': xwd_form, 'size': size})
+        c = {'xword': xwd_form, 'size': size}
+        c.update(csrf(request))
+        return render_to_response('create.html', c)
 
 def crossword_add_note(request):
     if request.is_ajax():

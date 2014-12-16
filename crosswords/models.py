@@ -49,7 +49,7 @@ class CsPresets(models.Model):
         return "%s"%(self.grid)    
 
     def get_absolute_url(self):
-        return reverse('crossword2', args=(self.pk,))
+        return reverse('crossword', args=(self.pk,))
 
     class Meta:
         db_table = u'cs_presets'
