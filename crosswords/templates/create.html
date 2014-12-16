@@ -54,7 +54,7 @@
       });
     </script>
     <a href="#" class="minibutton"><span id="paste_clues">Paste Clues</span></a>
-    <form id="paperEntry" action="/create/{{ size }}" method="POST" name="PaperEntry">
+    <form id="paperEntry" action="/create/{{ size }}" method="POST" name="PaperEntry">{% csrf_token %}
       {{ xword.as_p }}
       <div id="CABoxes"></div>
     </form>
